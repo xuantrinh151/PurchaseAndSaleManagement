@@ -34,8 +34,8 @@ html {
     margin-right: 100px;
 }
 .shopName{
-   padding: 5px;
-   margin: auto;
+    padding: 5px;
+    margin: auto;
 }
 .address{
     margin: auto;
@@ -58,7 +58,7 @@ html {
 }
 .management-import{
     background-color: rgb(74, 228, 35);
-   
+
 }
 .management-overview{
     background-color: rgb(147, 28, 177);
@@ -73,6 +73,9 @@ html {
     font-size: 30px;
     margin-top: 20px;
 }
+.changePage{
+    color: black;
+}
 .management p{
     font-size: 16px;
     color: white;
@@ -82,12 +85,12 @@ html {
     float: left;
     width: 16%;
     border-right: 5px solid rgb(34, 184, 29);
-  
+
 }
 .right{
     float: right;
     width: 84%;
-    
+
 }
 .overview{   
     display: flex;
@@ -101,22 +104,18 @@ html {
     height: 100px;
     border: 1px solid #676e8a;
     border-radius: 10px;
-    
-    
+
+
 }
 .overview-item-img{
-    
     width: 60px;
     height: 60px;
     float: left;
     margin-left: 20px;
     margin-top: 20px;
-    border: 1px solid;
-    border-radius: 10px;
 }
-.overview-item-img img{
-    border-radius: 10px;
-}
+
+
 .overview-item-detail{
     float:right;
     margin-right: 50px;
@@ -158,14 +157,23 @@ html {
     border: 1px solid;
     border-radius: 10px;
     margin-bottom: 10px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
 }
-.img-topDetail img{
-    border-radius: 10px;
+.topDetail-item-name{
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+.topDetail-item-quantitySell{
+    font-size: 14px;
+    font-weight: 500;
 }
 #footer{
     background-color: rgb(34, 184, 29);
     clear: both;
-   
+
 }
 .social:hover {
     -webkit-transform: scale(1.1);
@@ -175,7 +183,7 @@ html {
 .social {
     -webkit-transform: scale(0.8);
     /* Browser Variations: */
-    
+
     -moz-transform: scale(0.8);
     -o-transform: scale(0.8);
     -webkit-transition-duration: 0.5s;
