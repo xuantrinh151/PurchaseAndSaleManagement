@@ -46,6 +46,9 @@ ALTER TABLE KhachHang ADD CONSTRAINT FKKhachHang359408 FOREIGN KEY (RoleID) REFE
 ALTER TABLE KhachHang ADD Anh nvarchar(max);
 ALTER TABLE SanPham DROP COLUMN Anh;
 ALTER TABLE SanPham ADD Anh nvarchar(max);
+ALTER TABLE HoaDon DROP COLUMN TongTien;
+ALTER TABLE SanPham ALTER COLUMN Gia int NOT NULL;
+
 
 ---INSERT USER
 
@@ -162,12 +165,50 @@ INSERT INTO CTHD(MaHD, MaSP, SoLuong)
 VALUES (7, 4, 500);
 
 
-
-
-
 select * from [User]
 select * from Role
 select * from SanPham
-SELECT * FROM HoaDon
+SELECT h.MaHD,h.MaKH,k.HoTen,k.DiaChi,k.SDT,k.Anh,k.RoleID,h.NguoiLap ,u.Hoten, h.Ngay  FROM HoaDon h inner join KhachHang k on h.MaKH = k.MaKH 
+inner join [User] u on h.NguoiLap = u.ID
 SELECT * FROM KhachHang
-select * from CTHD
+select * from CTHD 
+
+select sum (SoLuong) as ProductSold from CTHD
+
+select sum(s.Gia * c.SoLuong)  as total  from CTHD c inner join SanPham s on c.MaSP = s.MaSP
+where s.Loai = N'Xuất'
+(select * from CTHD c inner join SanPham s on c.MaSP = s.MaSP
+where s.Loai = N'Nhập'
+
+with t as (
+	SELECT k.* ,c.* ,s.Gia,s.Gia * c.SoLuong as BillMoney from KhachHang k inner join HoaDon h on k.MaKH = h.MaKH 
+	inner join CTHD c on h.MaHD = c.MaHD
+	inner join SanPham s on c.MaSP = s.MaSP
+	where s.Loai = N'Xuất'
+)
+SELECT t.MaKH,t.HoTen,t.SDT,t.DiaChi,t.RoleID,t.Anh ,sum(t.BillMoney) as TotalMoney FROM t
+group by t.MaKH,t.HoTen,t.SDT,t.DiaChi,t.RoleID,t.Anh 
+order by TotalMoney desc
+
+SELECT h.MaHD,k.HoTen,u.Hoten as NguoiLap, h.Ngay  FROM HoaDon h inner join KhachHang k on h.MaKH = k.MaKH 
+inner join [User] u on h.NguoiLap = u.ID
+where k.RoleID = 4
+
+SELECT k.MaKH,k.HoTen,k.SDT,k.DiaChi,k.RoleID,k.Anh ,c.MaHD,c.MaSP,c.SoLuong,s.TenSP, s.Gia,s.Gia * c.SoLuong as BillMoney,h.Ngay ,u.Hoten
+from KhachHang k inner join HoaDon h on k.MaKH = h.MaKH 
+	inner join CTHD c on h.MaHD = c.MaHD
+	inner join SanPham s on c.MaSP = s.MaSP
+	inner join [User] u  on u.ID = h.NguoiLap
+ 	where s.Loai = N'Xuất' and h.MaHD = 2
+
+select * from HoaDon h where h.MaHD = 2
+
+SELECT h.MaHD,k.HoTen,u.Hoten as NguoiLap, h.Ngay  FROM HoaDon h
+				inner join KhachHang k on h.MaKH = k.MaKH 
+              inner join [User] u on h.NguoiLap = u.ID where h.MaHD = 2
+
+select h.MaHD, sum(s.Gia * c.SoLuong )  as Total from SanPham s 
+			inner join CTHD c on s.MaSP = c.MaSP 
+			inner join HoaDon h on c.MaHD = h.MaHD 
+			where h.MaHD = 2 and s.Loai = N'Xuất'
+			group by h.MaHD

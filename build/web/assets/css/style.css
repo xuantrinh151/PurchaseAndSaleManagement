@@ -104,21 +104,20 @@ html {
     height: 100px;
     border: 1px solid #676e8a;
     border-radius: 10px;
+    display: flex;
+    align-items: center;
 
 
 }
 .overview-item-img{
     width: 60px;
     height: 60px;
-    float: left;
     margin-left: 20px;
-    margin-top: 20px;
 }
 
 
 .overview-item-detail{
-    float:right;
-    margin-right: 50px;
+    margin-left: 14px;
     margin-top: 20px;
 }
 .hello-admin p:first-child{

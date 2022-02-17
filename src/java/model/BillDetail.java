@@ -9,7 +9,8 @@ public class BillDetail {
     private Bill bill;
     private Product product;
     private int quantity;
-
+    
+    
     public Bill getBill() {
         return bill;
     }

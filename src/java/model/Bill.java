@@ -5,7 +5,7 @@
  */
 package model;
 
-import java.math.BigDecimal;
+
 import java.sql.Date;
 
 /**
@@ -15,7 +15,7 @@ import java.sql.Date;
 public class Bill {
     private int bId;
     private Date time;
-    private BigDecimal totalMoney;
+    
     private Customer customer;
     private User user;
 
@@ -35,13 +35,9 @@ public class Bill {
         this.time = time;
     }
 
-    public BigDecimal getTotalMoney() {
-        return totalMoney;
-    }
+    
 
-    public void setTotalMoney(BigDecimal totalMoney) {
-        this.totalMoney = totalMoney;
-    }
+   
 
     public Customer getCustomer() {
         return customer;

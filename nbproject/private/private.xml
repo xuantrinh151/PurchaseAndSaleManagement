@@ -3,8 +3,16 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/SPRING%202022/PRJ301/ProjectFinal/PurchaseAndSaleManagement/web/assets/css/style.css</file>
-            <file>file:/D:/SPRING%202022/PRJ301/ProjectFinal/PurchaseAndSaleManagement/web/index.jsp</file>
+            <file>file:/D:/SPRING%202022/PRJ301/ProjectFinal/PurchaseAndSaleManagement/web/tableSell.jsp</file>
+            <file>file:/D:/SPRING%202022/PRJ301/ProjectFinal/PurchaseAndSaleManagement/src/java/model/Customer.java</file>
+            <file>file:/D:/SPRING%202022/PRJ301/ProjectFinal/PurchaseAndSaleManagement/src/java/model/Product.java</file>
+            <file>file:/D:/SPRING%202022/PRJ301/ProjectFinal/PurchaseAndSaleManagement/web/bill.jsp</file>
+            <file>file:/D:/SPRING%202022/PRJ301/ProjectFinal/PurchaseAndSaleManagement/src/java/controller/bill/ListController.java</file>
+            <file>file:/D:/SPRING%202022/PRJ301/ProjectFinal/PurchaseAndSaleManagement/src/java/model/BillDetail.java</file>
+            <file>file:/D:/SPRING%202022/PRJ301/ProjectFinal/PurchaseAndSaleManagement/src/java/dal/BillDBContext.java</file>
+            <file>file:/D:/SPRING%202022/PRJ301/ProjectFinal/PurchaseAndSaleManagement/src/java/model/Bill.java</file>
+            <file>file:/D:/SPRING%202022/PRJ301/ProjectFinal/PurchaseAndSaleManagement/src/java/controller/bill/DetailController.java</file>
+            <file>file:/D:/SPRING%202022/PRJ301/ProjectFinal/PurchaseAndSaleManagement/src/java/model/User.java</file>
         </group>
     </open-files>
 </project-private>

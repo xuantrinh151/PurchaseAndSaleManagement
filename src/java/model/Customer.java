@@ -5,17 +5,43 @@
  */
 package model;
 
+import java.math.BigDecimal;
+
 /**
  *
  * @author xuant
  */
 public class Customer {
+
     private int cId;
     private String cName;
     private int cSdt;
     private String cAddress;
     private String cImage;
     private Role role;
+    private int amountBought;
+
+    public Customer() {
+    }
+
+    public Customer(int cId, String cName, int cSdt, String cAddress, String cImage, Role role) {
+        this.cId = cId;
+        this.cName = cName;
+        this.cSdt = cSdt;
+        this.cAddress = cAddress;
+        this.cImage = cImage;
+        this.role = role;
+    }
+
+    public int getAmountBought() {
+        return amountBought;
+    }
+
+    public void setAmountBought(int amountBought) {
+        this.amountBought = amountBought;
+    }
+
+    
 
     public Role getRole() {
         return role;
@@ -24,7 +50,7 @@ public class Customer {
     public void setRole(Role role) {
         this.role = role;
     }
-    
+
     public int getcId() {
         return cId;
     }

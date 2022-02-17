@@ -33,7 +33,7 @@ public class ProductDBContext extends DBContext {
                 Product p = new Product();
                 p.setpId(rs.getInt("MaSP"));
                 p.setpName(rs.getString("TenSP"));
-                p.setpPrice(rs.getBigDecimal("Gia"));
+                p.setpPrice(rs.getInt("Gia"));
                 p.setpImage(rs.getString("Anh"));
                 p.setQuantitySell(rs.getInt("Total"));
                 products.add(p);
@@ -44,5 +44,18 @@ public class ProductDBContext extends DBContext {
         return  products;
     }
     
-    
+    public int getProductSold(){
+        int productSold = 0;
+        String sql = "select sum (SoLuong) as ProductSold from CTHD";
+        try {
+            PreparedStatement stm = connection.prepareStatement(sql);
+            ResultSet rs = stm.executeQuery();
+            if(rs.next()){
+                productSold = rs.getInt("ProductSold");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return productSold;
+    }
 }

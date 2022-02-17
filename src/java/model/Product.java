@@ -14,10 +14,23 @@ import java.math.BigDecimal;
 public class Product {
     private int pId;
     private String pName;
-    private BigDecimal pPrice;
+    private int pPrice;
     private String pImage;
     private String pType;
     private int quantitySell;
+
+    public Product() {
+    }
+
+    
+    
+    public Product(int pId, String pName, int pPrice, String pImage, String pType) {
+        this.pId = pId;
+        this.pName = pName;
+        this.pPrice = pPrice;
+        this.pImage = pImage;
+        this.pType = pType;
+    }
 
     public int getQuantitySell() {
         return quantitySell;
@@ -43,14 +56,15 @@ public class Product {
         this.pName = pName;
     }
 
-    public BigDecimal getpPrice() {
+    public int getpPrice() {
         return pPrice;
     }
 
-    public void setpPrice(BigDecimal pPrice) {
+    public void setpPrice(int pPrice) {
         this.pPrice = pPrice;
     }
 
+    
     
 
     public String getpImage() {

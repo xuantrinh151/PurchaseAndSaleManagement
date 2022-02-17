@@ -78,6 +78,9 @@ html {
     color: white;
     margin-top: 5px;
 }
+.changePage{
+    color: black;
+}
 .left{
     float: left;
     width: 16%;
