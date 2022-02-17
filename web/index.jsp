@@ -27,42 +27,9 @@
 
         <body>
             <div id="main">
-                <div id="header">
-                    <div class="header-logo">
-                        <img class="img-responsive" src="./assets/img/logoheader.png" alt="">
-                    </div>
-                    <div class="header-info">
-                        <h1 class="shopName">Nhà Vườn Phương Viên</h1>
-                        <h2 class="address">Địa chỉ : Xuân Quan ,Văn Giang ,Hưng Yên</h2>
-                        <h2 class="phoneNumber">SDT: 0327051618</h2>
-                    </div>
-                    <div class="account">
-                        <img class="img-responsive" src="./assets/img/account.png" alt="">
-                    </div>
-                </div>
+            <jsp:include page="header.jsp"></jsp:include>
                 <div id="body">
-                    <div class="left">
-                        <div class="management management-overview">
-                            <a class="changePage" href="home"> <i class="fas fa-street-view"></i></a>
-
-                            <p>Tổng quan</p>
-
-                        </div>
-                        <div class="management management-sell">
-                            <a class="changePage" href="bill-list"><i class="fab fa-sellsy"></i></a>
-
-                            <p>Quản lý bán hàng</p>
-                        </div>
-                        <div class="management management-import"><i class="fas fa-file-import"></i>
-                            <p>Quản lý nhập hàng</p>
-                        </div>
-                        <div class="management management-listProduct"><i class="fab fa-product-hunt"></i>
-                            <p>Danh sách mặt hàng</p>
-                        </div>
-                        <div class="management management-listCustomer"><i class="fas fa-user-tie"></i>
-                            <p>Danh sách khách hàng</p>
-                        </div>
-                    </div>
+                <jsp:include page="left.jsp"></jsp:include>
                     <div class="right">
                         <div class="overview">
                             <div class="hello-admin">
@@ -145,21 +112,7 @@
                 </div>
 
             </div>
-            <div id="footer">
-                <hr>
-                <div class="text-center center-block">
-                    <br />
-                    <a href="https://www.facebook.com/bootsnipp"><i id="social-fb"
-                                                                    class="fa fa-facebook-square fa-3x social"></i></a>
-                    <a href="https://twitter.com/bootsnipp"><i id="social-tw"
-                                                               class="fa fa-twitter-square fa-3x social"></i></a>
-                    <a href="https://plus.google.com/+Bootsnipp-page"><i id="social-gp"
-                                                                         class="fa fa-google-plus-square fa-3x social"></i></a>
-                    <a href="mailto:bootsnipp@gmail.com"><i id="social-em"
-                                                            class="fa fa-envelope-square fa-3x social"></i></a>
-                </div>
-                <hr>
-            </div>
+            <jsp:include page="footer.jsp"></jsp:include>
         </div>
     </body>
 
