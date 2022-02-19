@@ -21,10 +21,14 @@
         <a class="changePage" href="bill-list?kRole=3"><i class="fab fa-sellsy"></i></a>
         <p>Quản lý nhập hàng</p>
     </div>
-    <div class="management management-listProduct"><i class="fab fa-product-hunt"></i>
+    <div class="management management-listProduct">
+         <a class="changePage" href="product-list"><i class="fab fa-product-hunt"></i></a>
+        
         <p>Danh sách mặt hàng</p>
     </div>
-    <div class="management management-listCustomer"><i class="fas fa-user-tie"></i>
+    <div class="management management-listCustomer">
+        <a class="changePage" href="customer-list"><i class="fas fa-user-tie"></i></a>
+        
         <p>Danh sách khách hàng</p>
     </div>
 </div>

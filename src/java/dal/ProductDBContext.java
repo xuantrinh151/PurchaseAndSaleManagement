@@ -29,7 +29,7 @@ public class ProductDBContext extends DBContext {
         try {
             PreparedStatement stm = connection.prepareStatement(sql);
             ResultSet rs = stm.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 Product p = new Product();
                 p.setpId(rs.getInt("MaSP"));
                 p.setpName(rs.getString("TenSP"));
@@ -41,16 +41,16 @@ public class ProductDBContext extends DBContext {
         } catch (SQLException ex) {
             Logger.getLogger(ProductDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return  products;
+        return products;
     }
-    
-    public int getProductSold(){
+
+    public int getProductSold() {
         int productSold = 0;
         String sql = "select sum (SoLuong) as ProductSold from CTHD";
         try {
             PreparedStatement stm = connection.prepareStatement(sql);
             ResultSet rs = stm.executeQuery();
-            if(rs.next()){
+            if (rs.next()) {
                 productSold = rs.getInt("ProductSold");
             }
         } catch (SQLException ex) {
@@ -58,4 +58,28 @@ public class ProductDBContext extends DBContext {
         }
         return productSold;
     }
+
+    public ArrayList<Product> getAllProduct() {
+        ArrayList<Product> products = new ArrayList<Product>();
+        String sql = "select s.MaSP,s.TenSP ,s.Gia,s.Anh,s.Loai  from SanPham s";
+        try {
+            PreparedStatement stm = connection.prepareStatement(sql);
+            ResultSet rs = stm.executeQuery();
+            while(rs.next()){
+                Product p = new Product();
+                p.setpId(rs.getInt("MaSP"));
+                p.setpName(rs.getString("TenSP"));
+                p.setpPrice(rs.getInt("Gia"));
+                p.setpType(rs.getString("Loai"));
+                p.setpImage(rs.getString("Anh"));
+                products.add(p);
+                
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return products;
+    }
+    
+    
 }

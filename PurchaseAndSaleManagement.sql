@@ -199,7 +199,7 @@ from KhachHang k inner join HoaDon h on k.MaKH = h.MaKH
 	inner join CTHD c on h.MaHD = c.MaHD
 	inner join SanPham s on c.MaSP = s.MaSP
 	inner join [User] u  on u.ID = h.NguoiLap
- 	where s.Loai = N'Xuất' and h.MaHD = 2
+ 	where h.MaHD = 2
 
 select * from HoaDon h where h.MaHD = 2
 
@@ -210,5 +210,12 @@ SELECT h.MaHD,k.HoTen,u.Hoten as NguoiLap, h.Ngay  FROM HoaDon h
 select h.MaHD, sum(s.Gia * c.SoLuong )  as Total from SanPham s 
 			inner join CTHD c on s.MaSP = c.MaSP 
 			inner join HoaDon h on c.MaHD = h.MaHD 
-			where h.MaHD = 2 and s.Loai = N'Xuất'
+			where h.MaHD = 2 
 			group by h.MaHD
+
+select k.MaKH,k.HoTen,k.DiaChi,k.SDT,k.Anh,k.RoleID from HoaDon h  inner join KhachHang k on h.MaKH = k.MaKH
+		 where h.MaHD = 2
+
+
+select s.MaSP,s.TenSP ,s.Gia,s.Anh,s.Loai  from SanPham s
+select k.MaKH,k.HoTen,k.SDT,k.DiaChi,k.Anh,k.RoleID , r.Name  as RoleName from KhachHang k inner join Role r on k.RoleID = r.ID

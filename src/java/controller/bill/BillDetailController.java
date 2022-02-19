@@ -22,7 +22,7 @@ import model.Customer;
  *
  * @author xuant
  */
-public class DetailController extends HttpServlet {
+public class BillDetailController extends HttpServlet {
 
    
 
@@ -32,8 +32,8 @@ public class DetailController extends HttpServlet {
             throws ServletException, IOException {
         int bid = Integer.parseInt(request.getParameter("bid"));
         BillDBContext billDBContext = new BillDBContext();
-        Bill b = new Bill();
-        b = billDBContext.getBillById(bid);
+         
+        Bill b = billDBContext.getBillById(bid);
         request.setAttribute("bill", b);
         ArrayList<BillDetail> billDetail = billDBContext.getBillDetail(bid);
         request.setAttribute("billDetail", billDetail);

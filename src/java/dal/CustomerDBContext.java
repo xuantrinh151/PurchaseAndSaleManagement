@@ -60,7 +60,7 @@ public class CustomerDBContext extends DBContext {
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, bId);
             ResultSet rs = stm.executeQuery();
-            if(rs.next()){
+            if (rs.next()) {
                 Customer c = new Customer();
                 c.setcId(rs.getInt("MaKH"));
                 c.setcName(rs.getString("HoTen"));
@@ -77,6 +77,30 @@ public class CustomerDBContext extends DBContext {
         }
         return null;
     }
-    
-   
+
+    public ArrayList<Customer> getAllCustomer() {
+        ArrayList<Customer> customers = new ArrayList<>();
+        String sql = "select k.MaKH,k.HoTen,k.SDT,k.DiaChi,k.Anh,k.RoleID , r.Name as RoleName from KhachHang k inner join Role r on k.RoleID = r.ID";
+        try {
+            PreparedStatement stm = connection.prepareStatement(sql);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                Customer c = new Customer();
+                c.setcId(rs.getInt("MaKH"));
+                c.setcName(rs.getString("HoTen"));
+                c.setcSdt(rs.getInt("SDT"));
+                c.setcAddress(rs.getString("DiaChi"));
+                c.setcImage(rs.getString("Anh"));
+                Role r = new Role();
+                r.setrId(rs.getInt("RoleID"));
+                r.setrName(rs.getString("RoleName"));
+                c.setRole(r);
+                customers.add(c);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CustomerDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return customers;
+    }
+
 }

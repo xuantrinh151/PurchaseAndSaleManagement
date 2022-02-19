@@ -5,24 +5,40 @@
         <servlet-class>controller.HomeController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>ListController</servlet-name>
-        <servlet-class>controller.bill.ListController</servlet-class>
+        <servlet-name>BillListController</servlet-name>
+        <servlet-class>controller.bill.BillListController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>DetailController</servlet-name>
-        <servlet-class>controller.bill.DetailController</servlet-class>
+        <servlet-name>BillDetailController</servlet-name>
+        <servlet-class>controller.bill.BillDetailController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ProductListController</servlet-name>
+        <servlet-class>controller.product.ProductListController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CustomerListController</servlet-name>
+        <servlet-class>controller.customer.CustomerListController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>HomeController</servlet-name>
         <url-pattern>/home</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ListController</servlet-name>
+        <servlet-name>BillListController</servlet-name>
         <url-pattern>/bill-list</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>DetailController</servlet-name>
+        <servlet-name>BillDetailController</servlet-name>
         <url-pattern>/bill-detail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ProductListController</servlet-name>
+        <url-pattern>/product-list</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CustomerListController</servlet-name>
+        <url-pattern>/customer-list</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

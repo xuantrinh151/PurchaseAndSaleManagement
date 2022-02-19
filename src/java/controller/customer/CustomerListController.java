@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller.bill;
+package controller.customer;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -16,18 +16,14 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author xuant
  */
-public class ListController extends HttpServlet {
+public class CustomerListController extends HttpServlet {
 
     
-    
-
     
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int kRole = Integer.parseInt(request.getParameter("kRole"));
-        request.setAttribute("kRole", kRole);
-        request.getRequestDispatcher("tableSell.jsp").forward(request, response);
+        request.getRequestDispatcher("customerList.jsp").forward(request, response);
     }
 
     
