@@ -13,11 +13,12 @@
 
     </div>
     <div class="management management-sell">
-        <a class="changePage" href="bill-list"><i class="fab fa-sellsy"></i></a>
+        <a class="changePage" href="bill-list?kRole=4"><i class="fab fa-sellsy"></i></a>
 
         <p>Quản lý bán hàng</p>
     </div>
-    <div class="management management-import"><i class="fas fa-file-import"></i>
+    <div class="management management-import">
+        <a class="changePage" href="bill-list?kRole=3"><i class="fab fa-sellsy"></i></a>
         <p>Quản lý nhập hàng</p>
     </div>
     <div class="management management-listProduct"><i class="fab fa-product-hunt"></i>

@@ -6,6 +6,7 @@
 package controller.bill;
 
 import dal.BillDBContext;
+import dal.CustomerDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Bill;
 import model.BillDetail;
+import model.Customer;
 
 /**
  *
@@ -38,6 +40,9 @@ public class DetailController extends HttpServlet {
         int total = billDBContext.getTotalBill(bid);
         request.setAttribute("total", total);
         
+        CustomerDBContext customerDBContext = new CustomerDBContext();
+        Customer customer = customerDBContext.getCustomerByBid(bid);
+        request.setAttribute("customer", customer);
         request.getRequestDispatcher("bill.jsp").forward(request, response);
         
     }

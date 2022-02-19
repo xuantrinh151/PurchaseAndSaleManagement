@@ -67,7 +67,7 @@
                                         </thead>
                                         <tbody>
 
-                                        <c:forEach items="${bill.allBill}" var="b" varStatus="status">
+                                        <c:forEach items="${bill.getAllBill(kRole)}" var="b" varStatus="status">
                                             <tr>
                                                 <td>${status.count}</td>
                                                 <td>${b.customer.cName}</td>

@@ -58,13 +58,14 @@ public class BillDBContext extends DBContext {
         return totalCost;
     }
 
-    public ArrayList<Bill> getAllBill() {
+    public ArrayList<Bill> getAllBill(int kRole) {
         ArrayList<Bill> bills = new ArrayList<>();
         String sql = "SELECT h.MaHD,k.HoTen,u.Hoten as NguoiLap, h.Ngay  FROM HoaDon h inner join KhachHang k on h.MaKH = k.MaKH \n"
                 + "inner join [User] u on h.NguoiLap = u.ID\n"
-                + "where k.RoleID = 4";
+                + "where k.RoleID = ?";
         try {
             PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, kRole);
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
                 Bill b = new Bill();
@@ -83,6 +84,10 @@ public class BillDBContext extends DBContext {
         }
         return bills;
     }
+    
+    
+    
+    
 
     public ArrayList<BillDetail> getBillDetail(int bId) {
         ArrayList<BillDetail> billDetails = new ArrayList<>();
@@ -91,7 +96,7 @@ public class BillDBContext extends DBContext {
                 + "	inner join CTHD c on h.MaHD = c.MaHD\n"
                 + "	inner join SanPham s on c.MaSP = s.MaSP\n"
                 + "	inner join [User] u  on u.ID = h.NguoiLap\n"
-                + " 	where s.Loai = N'Xuất' and h.MaHD = ?";
+                + " 	where h.MaHD = ?";
         try {
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, bId);
@@ -149,19 +154,14 @@ public class BillDBContext extends DBContext {
         return null;
     }
 
-    public static void main(String[] args) {
-        BillDBContext bContext = new BillDBContext();
-        Bill b = bContext.getBillById(2);
-
-        System.out.println(b.getTime());
-    }
+    
 
     public int getTotalBill(int bId) {
         int total = 0;
         String sql = "select h.MaHD, sum(s.Gia * c.SoLuong )  as Total from SanPham s \n"
                 + "			inner join CTHD c on s.MaSP = c.MaSP \n"
                 + "			inner join HoaDon h on c.MaHD = h.MaHD \n"
-                + "			where h.MaHD = ? and s.Loai = N'Xuất'\n"
+                + "			where h.MaHD = ? \n"
                 + "			group by h.MaHD";
         try {
             PreparedStatement stm = connection.prepareStatement(sql);

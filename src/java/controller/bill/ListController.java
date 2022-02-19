@@ -25,6 +25,8 @@ public class ListController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        int kRole = Integer.parseInt(request.getParameter("kRole"));
+        request.setAttribute("kRole", kRole);
         request.getRequestDispatcher("tableSell.jsp").forward(request, response);
     }
 

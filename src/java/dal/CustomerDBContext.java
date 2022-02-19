@@ -21,7 +21,7 @@ import model.Role;
 public class CustomerDBContext extends DBContext {
 
     public ArrayList<Customer> getTopThreeCustomer() {
-        ArrayList<Customer > customers = new ArrayList<>();
+        ArrayList<Customer> customers = new ArrayList<>();
         String sql = "with t as (\n"
                 + "	SELECT k.* ,c.* ,s.Gia,s.Gia * c.SoLuong as BillMoney from KhachHang k inner join HoaDon h on k.MaKH = h.MaKH \n"
                 + "	inner join CTHD c on h.MaHD = c.MaHD\n"
@@ -34,7 +34,7 @@ public class CustomerDBContext extends DBContext {
         try {
             PreparedStatement stm = connection.prepareStatement(sql);
             ResultSet rs = stm.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 Customer c = new Customer();
                 c.setcId(rs.getInt("MaKH"));
                 c.setcName(rs.getString("HoTen"));
@@ -52,6 +52,31 @@ public class CustomerDBContext extends DBContext {
         }
         return customers;
     }
+
+    public Customer getCustomerByBid(int bId) {
+        String sql = "select k.MaKH,k.HoTen,k.DiaChi,k.SDT,k.Anh,k.RoleID from HoaDon h  inner join KhachHang k on h.MaKH = k.MaKH\n"
+                + "where h.MaHD = ?";
+        try {
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, bId);
+            ResultSet rs = stm.executeQuery();
+            if(rs.next()){
+                Customer c = new Customer();
+                c.setcId(rs.getInt("MaKH"));
+                c.setcName(rs.getString("HoTen"));
+                c.setcAddress(rs.getString("DiaChi"));
+                c.setcSdt(rs.getInt("SDT"));
+                c.setcImage(rs.getString("Anh"));
+                Role r = new Role();
+                r.setrId(rs.getInt("RoleID"));
+                c.setRole(r);
+                return c;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CustomerDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
     
-    
+   
 }

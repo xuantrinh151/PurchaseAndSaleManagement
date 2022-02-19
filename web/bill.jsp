@@ -64,7 +64,7 @@
                                 </table>
                             </div>
                         </div>
-                                        <div class="text-right mb-3"><button class="btn btn-danger btn-sm mr-5" onclick="document.location='bill-list'" >Return</button></div>
+                                        <div class="text-right mb-3"><button class="btn btn-danger btn-sm mr-5" onclick="document.location='bill-list?kRole=${customer.getRole().getrId()}'" >Return</button></div>
                     </div>
                 </div>
             </div>
