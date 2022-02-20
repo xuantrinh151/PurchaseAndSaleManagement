@@ -5,6 +5,7 @@
  */
 package controller.bill;
 
+import controller.authorization.BaseAuthorizationController;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -16,14 +17,14 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author xuant
  */
-public class BillListController extends HttpServlet {
+public class BillListController extends BaseAuthorizationController {
 
     
     
 
     
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void processGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         int kRole = Integer.parseInt(request.getParameter("kRole"));
         request.setAttribute("kRole", kRole);
@@ -32,9 +33,11 @@ public class BillListController extends HttpServlet {
 
     
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void processPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
     }
+
+    
 
     
 

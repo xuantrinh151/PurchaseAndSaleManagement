@@ -25,6 +25,7 @@ html {
 .account{
     height: 50px;
     width: 50px;
+    text-align: center;
 }
 .account img{
     border-radius: 10px;

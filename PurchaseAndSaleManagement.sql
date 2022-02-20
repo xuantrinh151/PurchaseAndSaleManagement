@@ -48,7 +48,7 @@ ALTER TABLE SanPham DROP COLUMN Anh;
 ALTER TABLE SanPham ADD Anh nvarchar(max);
 ALTER TABLE HoaDon DROP COLUMN TongTien;
 ALTER TABLE SanPham ALTER COLUMN Gia int NOT NULL;
-
+ALTER TABLE [User] ADD Anh nvarchar(max);
 
 ---INSERT USER
 
@@ -219,3 +219,8 @@ select k.MaKH,k.HoTen,k.DiaChi,k.SDT,k.Anh,k.RoleID from HoaDon h  inner join Kh
 
 select s.MaSP,s.TenSP ,s.Gia,s.Anh,s.Loai  from SanPham s
 select k.MaKH,k.HoTen,k.SDT,k.DiaChi,k.Anh,k.RoleID , r.Name  as RoleName from KhachHang k inner join Role r on k.RoleID = r.ID
+select * from Role
+
+select u.ID, u.TaiKhoan,u.MatKhau ,u.Hoten,u.RoleID ,r.Name from [User] u  inner join Role r on r.ID = u.RoleID
+where u.TaiKhoan = 'phuongvien' and u.MatKhau = '123'
+

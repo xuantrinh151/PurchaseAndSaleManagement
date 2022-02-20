@@ -5,6 +5,7 @@
  */
 package controller.product;
 
+import controller.authorization.BaseAuthorizationController;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -16,20 +17,20 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author xuant
  */
-public class ProductListController extends HttpServlet {
+public class ProductListController extends BaseAuthorizationController {
 
     
 
     
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void processGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         request.getRequestDispatcher("productList.jsp").forward(request, response);
     }
 
    
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void processPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
     }
 

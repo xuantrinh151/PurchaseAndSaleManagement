@@ -14,6 +14,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Login</title>
         <link rel="stylesheet" href="./assets/css/styleLogin.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     </head>
 
@@ -27,9 +28,14 @@
                     <button>create</button>
                     <p class="message">Already registered? <a href="#">Sign In</a></p>
                 </form>
-                <form class="login-form">
-                    <input type="text" placeholder="username" />
-                    <input type="password" placeholder="password" />
+                <form class="login-form" action="login" method="POST">
+                    <c:if test="${not empty message}">
+                        <div class="alert alert-${alert}"> 
+                            ${message}
+                        </div>
+                    </c:if>
+                    <input type="text" placeholder="username" name="username" />
+                    <input type="password" placeholder="password" name="password" />
 
                     <div style="display: flex;
                          align-items: center;
