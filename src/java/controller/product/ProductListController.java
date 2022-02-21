@@ -25,7 +25,7 @@ public class ProductListController extends BaseAuthorizationController {
     @Override
     protected void processGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("productList.jsp").forward(request, response);
+        request.getRequestDispatcher("/view/product/productList.jsp").forward(request, response);
     }
 
    

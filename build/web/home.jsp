@@ -27,9 +27,9 @@
 
         <body>
             <div id="main">
-            <jsp:include page="header.jsp"></jsp:include>
+            <jsp:include page="/view/common/header.jsp"></jsp:include>
                 <div id="body">
-                <jsp:include page="left.jsp"></jsp:include>
+                <jsp:include page="/view/common/left.jsp"></jsp:include>
                     <div class="right">
                         <div class="overview">
                             <div class="hello-admin">
@@ -112,7 +112,7 @@
                 </div>
 
             </div>
-            <jsp:include page="footer.jsp"></jsp:include>
+            <jsp:include page="/view/common/footer.jsp"></jsp:include>
         </div>
     </body>
 

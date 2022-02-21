@@ -16,16 +16,15 @@
         <h2 class="phoneNumber">SDT: 0327051618</h2>
     </div>
     <div class="account" style="text-align: center">
-        
+
         <img style="margin-bottom: 10px;" class="img-responsive" src="./assets/img/account.png" alt="">
         <c:if test="${ empty user }">
             <a style="color: white;text-decoration: none" href="login?action=login">Login</a>
         </c:if>
-              
         <c:if test="${not empty user}">
             <a style="color: white;text-decoration: none" href="logout?action=logout">Log Out</a>
-            
         </c:if>
         
     </div>
+    
 </div>

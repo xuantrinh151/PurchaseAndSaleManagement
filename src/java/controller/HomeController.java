@@ -44,15 +44,12 @@ public class HomeController extends HttpServlet {
         CustomerDBContext customerDBContext = new CustomerDBContext();
         ArrayList<Customer> customers = customerDBContext.getTopThreeCustomer();
         request.setAttribute("customers", customers);
-        request.getRequestDispatcher("index.jsp").forward(request, response);
+        request.getRequestDispatcher("home.jsp").forward(request, response);
     }
-
-    
+ 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
     }
-
-    
 
 }

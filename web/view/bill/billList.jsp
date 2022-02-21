@@ -1,12 +1,11 @@
 <%-- 
-    Document   : customerList
-    Created on : Feb 19, 2022, 7:04:48 PM
+    Document   : tableSell
+    Created on : Feb 10, 2022, 9:44:31 PM
     Author     : xuant
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -25,21 +24,21 @@
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
         <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
         <title>Table</title>
-        <jsp:useBean id="customer" class="dal.CustomerDBContext" scope="request"></jsp:useBean>
+        <jsp:useBean id= "bill" class="dal.BillDBContext" scope="request"></jsp:useBean>
         </head>
 
         <body>
             <div id="main">
-            <jsp:include page="header.jsp"></jsp:include>
+            <jsp:include page="../common/header.jsp"></jsp:include>
                 <div id="body">
-                <jsp:include page="left.jsp"></jsp:include>
+                <jsp:include page="../common/left.jsp"></jsp:include>
                     <div class="right">
 
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="right-header">
-                                    <h4>List of customers</h4>
-                                    <button type="button" class="btn btn-primary btn-add">Add Customer</button>
+                                    <h4>List of products sold</h4>
+                                    <button type="button" class="btn btn-primary btn-add">Add Bill</button>
                                 </div>
                                 <form>
                                     <div class="form-group row">
@@ -57,24 +56,24 @@
                                     <table id="mytable" class="table table-bordred table-striped">
 
                                         <thead>
-                                        <th>Mã Khách Hàng</th>
+                                        <th>STT</th>
                                         <th>Tên Khách Hàng</th>
-                                        <th>SDT</th>
-                                        <th>Địa Chỉ</th>
-                                        <th>Role</th>
+                                        <th>Người Lập</th>
+                                        <th>Ngày Lập</th>
+                                        <th>Mã Hóa Đơn</th>
                                         <th>Edit</th>
 
                                         <th>Delete</th>
                                         </thead>
                                         <tbody>
 
-                                        <c:forEach items="${customer.allCustomer}" var="c">
+                                        <c:forEach items="${bill.getAllBill(kRole)}" var="b" varStatus="status">
                                             <tr>
-                                                <td>${c.cId}</td>
-                                                <td>${c.cName}</td>
-                                                <td>0${c.cSdt}</td>
-                                                <td>${c.cAddress}</td>
-                                                <td>${c.role.rName}</td>
+                                                <td>${status.count}</td>
+                                                <td>${b.customer.cName}</td>
+                                                <td>${b.user.uName}</td>
+                                                <td>${b.time}</td>
+                                                <td><a href="bill-detail?bid=${b.bId}">${b.bId}</a></td>
                                                 <td>
                                                     <p data-placement="top" data-toggle="tooltip" title="Edit"><button
                                                             class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal"
@@ -89,8 +88,6 @@
                                                 </td>
                                             </tr>
                                         </c:forEach>
-
-
 
                                     </tbody>
 
@@ -176,7 +173,7 @@
                     <!-- /.modal-dialog -->
                 </div>
             </div>
-            <jsp:include page="footer.jsp"></jsp:include>
+            <jsp:include page="../common/footer.jsp"></jsp:include>
         </div>
 
     </body>

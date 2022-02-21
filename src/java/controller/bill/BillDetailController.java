@@ -43,7 +43,7 @@ public class BillDetailController extends HttpServlet {
         CustomerDBContext customerDBContext = new CustomerDBContext();
         Customer customer = customerDBContext.getCustomerByBid(bid);
         request.setAttribute("customer", customer);
-        request.getRequestDispatcher("bill.jsp").forward(request, response);
+        request.getRequestDispatcher("/view/bill/billDetail.jsp").forward(request, response);
         
     }
 

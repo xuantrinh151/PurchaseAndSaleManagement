@@ -28,7 +28,7 @@ public class BillListController extends BaseAuthorizationController {
             throws ServletException, IOException {
         int kRole = Integer.parseInt(request.getParameter("kRole"));
         request.setAttribute("kRole", kRole);
-        request.getRequestDispatcher("tableSell.jsp").forward(request, response);
+        request.getRequestDispatcher("/view/bill/billList.jsp").forward(request, response);
     }
 
     

@@ -1,6 +1,6 @@
 <%-- 
-    Document   : productList
-    Created on : Feb 19, 2022, 6:34:07 PM
+    Document   : customerList
+    Created on : Feb 19, 2022, 7:04:48 PM
     Author     : xuant
 --%>
 
@@ -25,21 +25,21 @@
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
         <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
         <title>Table</title>
-        <jsp:useBean id="product" class="dal.ProductDBContext" scope="request"></jsp:useBean>
+        <jsp:useBean id="customer" class="dal.CustomerDBContext" scope="request"></jsp:useBean>
         </head>
 
         <body>
             <div id="main">
-            <jsp:include page="header.jsp"></jsp:include>
+            <jsp:include page="../common/header.jsp"></jsp:include>
                 <div id="body">
-                <jsp:include page="left.jsp"></jsp:include>
+                <jsp:include page="../common/left.jsp"></jsp:include>
                     <div class="right">
 
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="right-header">
-                                    <h4>List of products</h4>
-                                    <button type="button" class="btn btn-primary btn-add">Add Product</button>
+                                    <h4>List of customers</h4>
+                                    <button type="button" class="btn btn-primary btn-add">Add Customer</button>
                                 </div>
                                 <form>
                                     <div class="form-group row">
@@ -57,24 +57,24 @@
                                     <table id="mytable" class="table table-bordred table-striped">
 
                                         <thead>
-                                        <th>Mã Sản Phẩm</th>
-                                        <th>Tên Sản Phẩm</th>
-                                        <th>Giá</th>
-                                        <th>Loại</th>
-                                        
+                                        <th>Mã Khách Hàng</th>
+                                        <th>Tên Khách Hàng</th>
+                                        <th>SDT</th>
+                                        <th>Địa Chỉ</th>
+                                        <th>Role</th>
                                         <th>Edit</th>
 
                                         <th>Delete</th>
                                         </thead>
                                         <tbody>
 
-                                        <c:forEach items="${product.allProduct}" var="p">
+                                        <c:forEach items="${customer.allCustomer}" var="c">
                                             <tr>
-                                                <td>${p.pId}</td>
-                                                <td>${p.pName}</td>
-                                                <td>${p.pPrice}</td>
-                                                <td>${p.pType}</td>
-                                                
+                                                <td>${c.cId}</td>
+                                                <td>${c.cName}</td>
+                                                <td>0${c.cSdt}</td>
+                                                <td>${c.cAddress}</td>
+                                                <td>${c.role.rName}</td>
                                                 <td>
                                                     <p data-placement="top" data-toggle="tooltip" title="Edit"><button
                                                             class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal"
@@ -176,10 +176,9 @@
                     <!-- /.modal-dialog -->
                 </div>
             </div>
-            <jsp:include page="footer.jsp"></jsp:include>
+                <jsp:include page="../common/footer.jsp"></jsp:include>
         </div>
 
     </body>
 
 </html>
-
