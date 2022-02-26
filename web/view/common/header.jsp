@@ -24,7 +24,7 @@
         <c:if test="${not empty user}">
             <a style="color: white;text-decoration: none" href="logout?action=logout">Log Out</a>
         </c:if>
-        
+
     </div>
     
 </div>

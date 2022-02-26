@@ -65,7 +65,7 @@ public class ProductDBContext extends DBContext {
         try {
             PreparedStatement stm = connection.prepareStatement(sql);
             ResultSet rs = stm.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 Product p = new Product();
                 p.setpId(rs.getInt("MaSP"));
                 p.setpName(rs.getString("TenSP"));
@@ -73,12 +73,53 @@ public class ProductDBContext extends DBContext {
                 p.setpType(rs.getString("Loai"));
                 p.setpImage(rs.getString("Anh"));
                 products.add(p);
-                
+
             }
         } catch (SQLException ex) {
             Logger.getLogger(ProductDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
         return products;
+    }
+
+    public ArrayList<Product> getProducts(int pageindex, int pagesize) {
+        ArrayList<Product> products = new ArrayList<>();
+        try {
+            String sql = "SELECT s.MaSP,s.TenSP,s.Gia,s.Anh,s.Loai FROM \n"
+                    + "            (SELECT *,ROW_NUMBER() OVER (ORDER BY sp.MaSP ASC) as row_index FROM SanPham sp) s\n"
+                    + "            WHERE row_index >= (? -1)* ? +1 AND row_index <= ? * ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, pageindex);
+            stm.setInt(2, pagesize);
+            stm.setInt(3, pageindex);
+            stm.setInt(4, pagesize);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                Product p = new Product();
+                p.setpId(rs.getInt("MaSP"));
+                p.setpName(rs.getString("TenSP"));
+                p.setpPrice(rs.getInt("Gia"));
+                p.setpImage(rs.getString("Anh"));
+                p.setpType(rs.getString("Loai"));
+                products.add(p);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return products;
+    }
+
+    public int count() {
+        try {
+            String sql = "SELECT count(*) as Total FROM SanPham";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("Total");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return -1;
     }
     
     

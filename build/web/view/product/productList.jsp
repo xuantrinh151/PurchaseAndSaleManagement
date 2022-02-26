@@ -25,7 +25,9 @@
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
         <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
         <title>Table</title>
-        <jsp:useBean id="product" class="dal.ProductDBContext" scope="request"></jsp:useBean>
+        <link href="./assets/css/pager.css" rel="stylesheet" type="text/css"/>
+        <script src="./assets/js/pagger.js" type="text/javascript"></script>
+       
         </head>
 
         <body>
@@ -68,7 +70,7 @@
                                         </thead>
                                         <tbody>
 
-                                        <c:forEach items="${product.allProduct}" var="p">
+                                        <c:forEach items="${products}" var="p">
                                             <tr>
                                                 <td>${p.pId}</td>
                                                 <td>${p.pName}</td>
@@ -97,19 +99,10 @@
                                 </table>
 
                                 <div class="clearfix"></div>
-                                <ul class="pagination pull-right">
-                                    <li class="disabled"><a href="#"><span
-                                                class="glyphicon glyphicon-chevron-left"></span></a></li>
-                                    <li class="active"><a href="#">1</a></li>
-                                    <li><a href="#">2</a></li>
-                                    <li><a href="#">3</a></li>
-                                    <li><a href="#">4</a></li>
-                                    <li><a href="#">5</a></li>
-                                    <li><a href="#"><span class="glyphicon glyphicon-chevron-right"></span></a></li>
-                                </ul>
-
+                               
+                                
                             </div>
-
+                                <div id="paggerClick" class="paging"> </div>    
                         </div>
                     </div>
                 </div>
@@ -178,7 +171,10 @@
             </div>
                 <jsp:include page="../common/footer.jsp"></jsp:include>
         </div>
-
+        <script> 
+            paggerClick('paggerClick',${pageindex},${totalpage},'paging',2)
+            
+        </script>
     </body>
 
 </html>

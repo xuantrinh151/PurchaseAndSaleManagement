@@ -24,6 +24,14 @@
         <servlet-name>LoginController</servlet-name>
         <servlet-class>controller.authorization.LoginController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AddProductController</servlet-name>
+        <servlet-class>controller.product.AddProductController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PagingController</servlet-name>
+        <servlet-class>controller.paging.PagingController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomeController</servlet-name>
         <url-pattern>/home</url-pattern>
@@ -51,6 +59,14 @@
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
         <url-pattern>/logout</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddProductController</servlet-name>
+        <url-pattern>/product-add</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PagingController</servlet-name>
+        <url-pattern>/paging</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

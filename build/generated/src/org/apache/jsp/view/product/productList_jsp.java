@@ -89,11 +89,11 @@ public final class productList_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("        <body>\n");
       out.write("            <div id=\"main\">\n");
       out.write("            ");
-      org.apache.jasper.runtime.JspRuntimeLibrary.include(request, response, "header.jsp", out, false);
+      org.apache.jasper.runtime.JspRuntimeLibrary.include(request, response, "../common/header.jsp", out, false);
       out.write("\n");
       out.write("                <div id=\"body\">\n");
       out.write("                ");
-      org.apache.jasper.runtime.JspRuntimeLibrary.include(request, response, "left.jsp", out, false);
+      org.apache.jasper.runtime.JspRuntimeLibrary.include(request, response, "../common/left.jsp", out, false);
       out.write("\n");
       out.write("                    <div class=\"right\">\n");
       out.write("\n");
@@ -221,8 +221,8 @@ public final class productList_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("                    <!-- /.modal-dialog -->\n");
       out.write("                </div>\n");
       out.write("            </div>\n");
-      out.write("            ");
-      org.apache.jasper.runtime.JspRuntimeLibrary.include(request, response, "footer.jsp", out, false);
+      out.write("                ");
+      org.apache.jasper.runtime.JspRuntimeLibrary.include(request, response, "../common/footer.jsp", out, false);
       out.write("\n");
       out.write("        </div>\n");
       out.write("\n");

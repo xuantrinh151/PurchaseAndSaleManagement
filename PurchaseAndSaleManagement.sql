@@ -224,3 +224,7 @@ select * from Role
 select u.ID, u.TaiKhoan,u.MatKhau ,u.Hoten,u.RoleID ,r.Name from [User] u  inner join Role r on r.ID = u.RoleID
 where u.TaiKhoan = 'phuongvien' and u.MatKhau = '123'
 
+select * from SanPham 
+SELECT s.MaSP,s.TenSP,s.Gia,s.Anh,s.Loai FROM 
+            (SELECT *,ROW_NUMBER() OVER (ORDER BY s.MaSP ASC) as row_index FROM SanPham s) s
+            WHERE row_index >= (4 -1)* 6 +1 AND row_index <= 4 * 6
