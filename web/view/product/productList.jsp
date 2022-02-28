@@ -27,11 +27,11 @@
         <title>Table</title>
         <link href="./assets/css/pager.css" rel="stylesheet" type="text/css"/>
         <script src="./assets/js/pagger.js" type="text/javascript"></script>
-       
-        </head>
 
-        <body>
-            <div id="main">
+    </head>
+
+    <body>
+        <div id="main">
             <jsp:include page="../common/header.jsp"></jsp:include>
                 <div id="body">
                 <jsp:include page="../common/left.jsp"></jsp:include>
@@ -41,7 +41,10 @@
                             <div class="col-md-12">
                                 <div class="right-header">
                                     <h4>List of products</h4>
-                                    <button type="button" class="btn btn-primary btn-add">Add Product</button>
+
+                                    <button type="button" onclick="location.href ='product-add' " class="btn btn-primary btn-add ">Add Product</button>
+                                    
+                                    
                                 </div>
                                 <form>
                                     <div class="form-group row">
@@ -63,7 +66,7 @@
                                         <th>Tên Sản Phẩm</th>
                                         <th>Giá</th>
                                         <th>Loại</th>
-                                        
+
                                         <th>Edit</th>
 
                                         <th>Delete</th>
@@ -76,17 +79,17 @@
                                                 <td>${p.pName}</td>
                                                 <td>${p.pPrice}</td>
                                                 <td>${p.pType}</td>
-                                                
+
                                                 <td>
                                                     <p data-placement="top" data-toggle="tooltip" title="Edit"><button
                                                             class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal"
-                                                            data-target="#edit"><span
+                                                            data-target="#edit" onclick="location.href ='product-edit?pId=${p.pId}'"><span
                                                                 class="glyphicon glyphicon-pencil"></span></button></p>
                                                 </td>
                                                 <td>
                                                     <p data-placement="top" data-toggle="tooltip" title="Delete"><button
                                                             class="btn btn-danger btn-xs" data-title="Delete"
-                                                            data-toggle="modal" data-target="#delete"><span
+                                                            data-toggle="modal" data-target="#delete" onclick="deleteProduct(${p.pId})"><span
                                                                 class="glyphicon glyphicon-trash"></span></button></p>
                                                 </td>
                                             </tr>
@@ -99,10 +102,10 @@
                                 </table>
 
                                 <div class="clearfix"></div>
-                               
-                                
+
+
                             </div>
-                                <div id="paggerClick" class="paging"> </div>    
+                            <div id="paggerClick" class="paging"> </div>    
                         </div>
                     </div>
                 </div>
@@ -169,11 +172,18 @@
                     <!-- /.modal-dialog -->
                 </div>
             </div>
-                <jsp:include page="../common/footer.jsp"></jsp:include>
-        </div>
-        <script> 
-            paggerClick('paggerClick',${pageindex},${totalpage},'paging',2)
-            
+            <jsp:include page="../common/footer.jsp"></jsp:include>
+            </div>
+            <script>
+            paggerClick('paggerClick',${pageindex},${totalpage}, 'paging', 2)
+            function deleteProduct(id)
+            {
+                var result = confirm("Are you sure?");
+                if(result)
+                {
+                    window.location.href = "product-delete?pId=" + id;
+                }
+            }
         </script>
     </body>
 

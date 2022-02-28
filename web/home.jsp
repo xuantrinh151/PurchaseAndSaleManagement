@@ -81,7 +81,7 @@
                                 <c:forEach items="${a.topThreeProduct}" var="i">
                                     <div class="topDetail-item">
                                         <div class="img-topDetail" 
-                                             style="background-image: url(${i.pImage});">
+                                             style="background-image: url(./assets/img/${i.pImage});">
                                         </div>
                                         <p class="topDetail-item-name" >${i.pName}</p>
                                         <p class="topDetail-item-quantitySell">Số Lượng: ${i.quantitySell} </p>

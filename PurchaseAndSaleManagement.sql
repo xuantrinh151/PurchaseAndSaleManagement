@@ -228,3 +228,4 @@ select * from SanPham
 SELECT s.MaSP,s.TenSP,s.Gia,s.Anh,s.Loai FROM 
             (SELECT *,ROW_NUMBER() OVER (ORDER BY s.MaSP ASC) as row_index FROM SanPham s) s
             WHERE row_index >= (4 -1)* 6 +1 AND row_index <= 4 * 6
+

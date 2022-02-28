@@ -32,6 +32,14 @@
         <servlet-name>PagingController</servlet-name>
         <servlet-class>controller.paging.PagingController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>EditProductController</servlet-name>
+        <servlet-class>controller.product.EditProductController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeleteProductController</servlet-name>
+        <servlet-class>controller.product.DeleteProductController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomeController</servlet-name>
         <url-pattern>/home</url-pattern>
@@ -67,6 +75,14 @@
     <servlet-mapping>
         <servlet-name>PagingController</servlet-name>
         <url-pattern>/paging</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditProductController</servlet-name>
+        <url-pattern>/product-edit</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteProductController</servlet-name>
+        <url-pattern>/product-delete</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
