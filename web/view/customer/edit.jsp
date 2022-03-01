@@ -22,18 +22,18 @@
               integrity="sha256-MfvZlkHCEqatNoGiOXveE8FIwMzZg4W85qfrfIFBfYc= sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ=="
               crossorigin="anonymous">
         <title>Table</title>
-        <jsp:useBean id="product" class="dal.ProductDBContext" scope="request"></jsp:useBean>
-        </head>
 
-        <body>
-            <div id="main">
+    </head>
+
+    <body>
+        <div id="main">
             <jsp:include page="../common/header.jsp"></jsp:include>
                 <div id="body">
                 <jsp:include page="../common/left.jsp"></jsp:include>
                     <div class="right">
 
                         <form class="form-horizontal" style="    margin-top: 160px;
-                              margin-left: 70px;" action="product-add" method="POST" enctype="multipart/form-data">
+                              margin-left: 70px;" action="customer-edit" method="POST" enctype="multipart/form-data">
                             <fieldset>
 
 
@@ -50,49 +50,72 @@
                                     </c:if>  
                                 </div>
                             </div>
-                            <!-- Text input-->
+
                             <div class="form-group">
-                                <label class="col-md-4 control-label" for="product_name">PRODUCT NAME</label>  
+                                <label class="col-md-4 control-label" for=""></label>  
                                 <div class="col-md-4">
-                                    <input id="product_name" name="customer_id" value=""  class="form-control input-md" required="" type="hidden">
+                                    <input id="" name="customer_id"  class=" input-md" value="${customer.getcId()}" type="hidden">
 
                                 </div>
                             </div>
 
                             <!-- Text input-->
                             <div class="form-group">
-                                <label class="col-md-4 control-label" for="product_name">PRODUCT NAME</label>  
+                                <label class="col-md-4 control-label" for="product_name">CUSTOMER NAME</label>  
                                 <div class="col-md-4">
-                                    <input id="product_name" name="product_name" placeholder="PRODUCT NAME" class="form-control input-md" required="" type="text">
+                                    <input id="product_name" name="customer_name"  class="form-control  input-md" value="${customer.getcName()}" type="text">
 
                                 </div>
                             </div>
 
 
+                            <!-- Text input-->
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="stock_alert">CUSTOMER PHONE</label>  
+                                <div class="col-md-4">
+                                    <input id="stock_alert" name="customer_phone" value="${customer.getcSdt()}" class="form-control input-md" required="" type="text">
 
+                                </div>
+                            </div>
 
 
                             <!-- Text input-->
                             <div class="form-group">
-                                <label class="col-md-4 control-label" for="stock_alert">PRICE</label>  
+                                <label class="col-md-4 control-label" for="stock_alert">CUSTOMER ADDRESS</label>  
                                 <div class="col-md-4">
-                                    <input id="stock_alert" name="product_price" placeholder="PRICE" class="form-control input-md" required="" type="text">
+                                    <input id="stock_alert" name="customer_address" value="${customer.getcAddress()}" class="form-control input-md" required="" type="text">
 
                                 </div>
                             </div>
 
                             <!-- Select Basic -->
                             <div class="form-group">
-                                <label class="col-md-4 control-label" for="">PRODUCT CATEGORY</label>
+                                <label class="col-md-4 control-label" for="">CUSTOMER ROLE</label>
                                 <div class="col-md-4">
-                                    <label class="radio-inline"><input type="radio" name="product_categorie" value="Xuất" checked>Xuất</label>
-                                    <label class="radio-inline"><input type="radio" name="product_categorie" value="Nhập">Nhập</label>
+                                    <label class="radio-inline">
+                                        <input type="radio"  
+                                               <c:if test="${customer.getRole().getrId() == 4}" >
+                                                   checked="checked"
+                                               </c:if>
+                                               name="customer_role" value="4" >BUYER</label>
+
+                                    <label class="radio-inline">
+                                        <input
+                                            <c:if test="${customer.getRole().getrId() == 3}" >
+                                                checked="checked"
+                                            </c:if>
+                                            type="radio" name="customer_role" value="3">SELLER</label>
                                 </div>
                             </div>
-
-                            <!-- File Button --> 
                             <div class="form-group">
                                 <label class="col-md-4 control-label" for="filebutton">IMAGE</label>
+                                <div class="col-md-4">
+                                    <img style="height: 100px;width: 100px"  class="img-responsive"  src="./assets/img/${customer.getcImage()}" alt="">
+                                </div>
+                            </div>
+                            <!-- File Button --> 
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="filebutton"></label>
                                 <div class="col-md-4">
                                     <input id="filebutton" name="image" class="input-file" type="file" >
                                 </div>
@@ -102,7 +125,7 @@
                             <div class="form-group">
                                 <label  class="col-md-4 control-label" for="singlebutton"></label>
                                 <div class="col-md-4">
-                                    <button id="singlebutton" name="singlebutton" class="btn btn-primary">AddProduct</button>
+                                    <button id="singlebutton" name="singlebutton" class="btn btn-primary">EditCustomer</button>
                                 </div>
                             </div>
 

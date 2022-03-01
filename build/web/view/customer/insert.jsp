@@ -22,18 +22,18 @@
               integrity="sha256-MfvZlkHCEqatNoGiOXveE8FIwMzZg4W85qfrfIFBfYc= sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ=="
               crossorigin="anonymous">
         <title>Table</title>
-        <jsp:useBean id="product" class="dal.ProductDBContext" scope="request"></jsp:useBean>
-        </head>
 
-        <body>
-            <div id="main">
+    </head>
+
+    <body>
+        <div id="main">
             <jsp:include page="../common/header.jsp"></jsp:include>
                 <div id="body">
                 <jsp:include page="../common/left.jsp"></jsp:include>
                     <div class="right">
 
                         <form class="form-horizontal" style="    margin-top: 160px;
-                              margin-left: 70px;" action="product-add" method="POST" enctype="multipart/form-data">
+                              margin-left: 70px;" action="customer-add" method="POST" enctype="multipart/form-data">
                             <fieldset>
 
 
@@ -50,43 +50,42 @@
                                     </c:if>  
                                 </div>
                             </div>
-                            <!-- Text input-->
-                            <div class="form-group">
-                                <label class="col-md-4 control-label" for="product_name">PRODUCT NAME</label>  
-                                <div class="col-md-4">
-                                    <input id="product_name" name="customer_id" value=""  class="form-control input-md" required="" type="hidden">
-
-                                </div>
-                            </div>
 
                             <!-- Text input-->
                             <div class="form-group">
-                                <label class="col-md-4 control-label" for="product_name">PRODUCT NAME</label>  
+                                <label class="col-md-4 control-label" for="customer_name">CUSTOMER NAME</label>  
                                 <div class="col-md-4">
-                                    <input id="product_name" name="product_name" placeholder="PRODUCT NAME" class="form-control input-md" required="" type="text">
+                                    <input id="product_name" name="customer_name" placeholder="CUSTOMER NAME" class="form-control input-md" required="" type="text">
 
                                 </div>
                             </div>
 
 
+                            <!-- Text input-->
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="customer_phone">CUSTOMER PHONE</label>  
+                                <div class="col-md-4">
+                                    <input id="product_name" name="customer_phone" placeholder="CUSTOMER PHONE" class="form-control input-md" required="" type="text">
 
+                                </div>
+                            </div>
 
 
                             <!-- Text input-->
                             <div class="form-group">
-                                <label class="col-md-4 control-label" for="stock_alert">PRICE</label>  
+                                <label class="col-md-4 control-label" for="stock_alert">CUSTOMER ADDRESS</label>  
                                 <div class="col-md-4">
-                                    <input id="stock_alert" name="product_price" placeholder="PRICE" class="form-control input-md" required="" type="text">
+                                    <input id="stock_alert" name="customer_address" placeholder="CUSTOMER ADDRESS" class="form-control input-md" required="" type="text">
 
                                 </div>
                             </div>
 
                             <!-- Select Basic -->
                             <div class="form-group">
-                                <label class="col-md-4 control-label" for="">PRODUCT CATEGORY</label>
+                                <label class="col-md-4 control-label" for="">CUSTOMER ROLE</label>
                                 <div class="col-md-4">
-                                    <label class="radio-inline"><input type="radio" name="product_categorie" value="Xuất" checked>Xuất</label>
-                                    <label class="radio-inline"><input type="radio" name="product_categorie" value="Nhập">Nhập</label>
+                                    <label class="radio-inline"><input type="radio" name="customer_role" value="4" checked>BUYER</label>
+                                    <label class="radio-inline"><input type="radio" name="customer_role" value="3">SELLER</label>
                                 </div>
                             </div>
 
@@ -102,7 +101,7 @@
                             <div class="form-group">
                                 <label  class="col-md-4 control-label" for="singlebutton"></label>
                                 <div class="col-md-4">
-                                    <button id="singlebutton" name="singlebutton" class="btn btn-primary">AddProduct</button>
+                                    <button id="singlebutton" name="singlebutton" class="btn btn-primary">AddCustomer</button>
                                 </div>
                             </div>
 

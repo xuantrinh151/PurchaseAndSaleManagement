@@ -8,10 +8,12 @@ package dal;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Customer;
+import model.Product;
 import model.Role;
 
 /**
@@ -103,4 +105,138 @@ public class CustomerDBContext extends DBContext {
         return customers;
     }
 
+    public int addCustomer(Customer c) {
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        String sql = "INSERT INTO [KhachHang]\n"
+                + "([HoTen] ,[SDT],[DiaChi],[RoleID],[Anh])\n"
+                + "VALUES (? ,? ,?,?,?)";
+        int cId = 0;
+        try {
+
+            stm = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            stm.setString(1, c.getcName());
+            stm.setInt(2, c.getcSdt());
+            stm.setString(3, c.getcAddress());
+            stm.setInt(4, c.getRole().getrId());
+            stm.setString(5, c.getcImage());
+
+            stm.executeUpdate();
+            rs = stm.getGeneratedKeys();
+            if (rs.next()) {
+                cId = rs.getInt(1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CustomerDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                // Close Result Set Object
+                if (rs != null) {
+                    rs.close();
+                }
+                // Close Prepared Statement Object      
+                if (stm != null) {
+                    stm.close();
+                }
+                // Close Connection Object      
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException sqlException) {
+            }
+        }
+        return cId;
+    }
+
+    public void deleteCustomer(int cId) {
+        String sql = "DELETE KhachHang"
+                + " WHERE [MaKH] = ?";
+        PreparedStatement stm = null;
+        try {
+            stm = connection.prepareStatement(sql);
+            stm.setInt(1, cId);
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(CustomerDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (stm != null) {
+                try {
+                    stm.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(CustomerDBContext.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(CustomerDBContext.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+    }
+
+    public void editCustomer(Customer c) {
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        String sql = "UPDATE [KhachHang]\n"
+                + "SET [HoTen] = ?,[SDT] = ?,[DiaChi] = ?,[RoleID] = ?,[Anh] = ?\n"
+                + "WHERE [MaKH] = ?";
+        try {
+            stm = connection.prepareStatement(sql);
+            stm.setString(1, c.getcName());
+            stm.setInt(2, c.getcSdt());
+            stm.setString(3, c.getcAddress());
+            stm.setInt(4, c.getRole().getrId());
+            stm.setString(5, c.getcImage());
+            stm.setInt(6,c.getcId());
+            stm.executeUpdate();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(CustomerDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                // Close Result Set Object
+                if (rs != null) {
+                    rs.close();
+                }
+                // Close Prepared Statement Object      
+                if (stm != null) {
+                    stm.close();
+                }
+                // Close Connection Object      
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException sqlException) {
+            }
+        }
+
+    }
+
+    public Customer getCustomer(int cId) {
+        String sql = "SELECT [MaKH] ,[HoTen] ,[SDT],[DiaChi],[RoleID],[Anh]\n"
+                + "  FROM [KhachHang] WHERE [MaKH] = ?";
+        try {
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, cId);
+            ResultSet rs = stm.executeQuery();
+            while(rs.next()){
+                Customer c = new Customer();
+                c.setcId(rs.getInt("MaKH"));
+                c.setcName(rs.getString("HoTen"));
+                c.setcAddress(rs.getString("DiaChi"));
+                c.setcSdt(rs.getInt("SDT"));
+                c.setcImage(rs.getString("Anh"));
+                Role r = new Role();
+                r.setrId(rs.getInt("RoleID"));
+                c.setRole(r);
+                return c;
+                
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CustomerDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
 }

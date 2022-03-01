@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller.product;
+package controller.customer;
 
-import dal.ProductDBContext;
+import dal.CustomerDBContext;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -16,14 +16,18 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
-import model.Product;
+import model.Customer;
+import model.Role;
 
 /**
  *
  * @author xuant
  */
 @MultipartConfig
-public class AddProductController extends HttpServlet {
+public class AddCustomerController extends HttpServlet {
+
+    
+    
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -35,16 +39,19 @@ public class AddProductController extends HttpServlet {
             request.setAttribute("message", message);
             request.setAttribute("alert", alert);
         }
-            request.getRequestDispatcher("/view/product/insert.jsp").forward(request, response);
+        request.getRequestDispatcher("/view/customer/insert.jsp").forward(request, response);
     }
 
+    
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
-        String pName = request.getParameter("product_name");
-        int pPrice = Integer.parseInt(request.getParameter("product_price"));
-        String pType = request.getParameter("product_categorie");
+        CustomerDBContext cdbc = new CustomerDBContext();
+        String cName = request.getParameter("customer_name");
+        int cPhone = Integer.parseInt(request.getParameter("customer_phone"));
+        String cAddress = request.getParameter("customer_address");
+        int roleId = Integer.parseInt(request.getParameter("customer_role"));
         Part file = request.getPart("image");
         String imageFileName = file.getSubmittedFileName();
         String uploadPath = "C:/Users/xuant/OneDrive/Desktop/PurchaseAndSaleManagement/web/assets/img/" + imageFileName;
@@ -54,23 +61,24 @@ public class AddProductController extends HttpServlet {
             is.read(data);
             fos.write(data);
         }
-
-        Product p = new Product();
-        p.setpName(pName);
-        p.setpPrice(pPrice);
-        p.setpImage(imageFileName);
-        p.setpType(pType);
-        ProductDBContext pdbc = new ProductDBContext();
-        int test = pdbc.addProduct(p);
-
+        
+        Customer customer = new Customer();
+        customer.setcName(cName);
+        customer.setcSdt(cPhone);
+        customer.setcAddress(cAddress);
+        Role r =new Role();
+        r.setrId(roleId);
+        customer.setRole(r);
+        customer.setcImage(imageFileName);
+        int test = cdbc.addCustomer(customer);
         if (test != 0) {
-            response.sendRedirect("product-add?message=Create Success&alert=success");
+            response.sendRedirect("customer-add?message=Create Success&alert=success");
         } else {
-            response.sendRedirect("product-add?message=Create Failure&alert=danger");
+            response.sendRedirect("customer-add?message=Create Failure&alert=danger");
         }
         
-        
-
     }
+
+    
 
 }

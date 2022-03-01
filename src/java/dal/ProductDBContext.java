@@ -193,20 +193,17 @@ public class ProductDBContext extends DBContext {
         String sql = "UPDATE [dbo].[SanPham]\n"
                 + "SET [TenSP] = ?,[Gia] = ?,[Anh] = ?,[Loai] = ?\n"
                 + "WHERE [MaSP] = ?";
-        int pId = 0;
+        
         try {
 
-            stm = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            stm = connection.prepareStatement(sql);
             stm.setString(1, p.getpName());
             stm.setInt(2, p.getpPrice());
             stm.setString(3, p.getpImage());
             stm.setString(4, p.getpType());
             stm.setInt(5, p.getpId());
             stm.executeUpdate();
-            rs = stm.getGeneratedKeys();
-            if (rs.next()) {
-                pId = rs.getInt(1);
-            }
+            
         } catch (SQLException ex) {
             Logger.getLogger(ProductDBContext.class.getName()).log(Level.SEVERE, null, ex);
         } finally {

@@ -50,6 +50,14 @@
                                     </c:if>  
                                 </div>
                             </div>
+                            <!-- Text input-->
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="product_name">PRODUCT NAME</label>  
+                                <div class="col-md-4">
+                                    <input id="product_name" name="customer_id" value=""  class="form-control input-md" required="" type="hidden">
+
+                                </div>
+                            </div>
 
                             <!-- Text input-->
                             <div class="form-group">
