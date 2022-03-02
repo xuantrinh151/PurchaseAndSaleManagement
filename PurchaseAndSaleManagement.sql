@@ -50,6 +50,7 @@ ALTER TABLE HoaDon DROP COLUMN TongTien;
 ALTER TABLE SanPham ALTER COLUMN Gia int NOT NULL;
 ALTER TABLE [User] ADD Anh nvarchar(max);
 
+
 ---INSERT USER
 
 INSERT INTO [User](Hoten, TaiKhoan, MatKhau, RoleID) 
@@ -226,6 +227,38 @@ where u.TaiKhoan = 'phuongvien' and u.MatKhau = '123'
 
 select * from SanPham 
 SELECT s.MaSP,s.TenSP,s.Gia,s.Anh,s.Loai FROM 
-            (SELECT *,ROW_NUMBER() OVER (ORDER BY s.MaSP ASC) as row_index FROM SanPham s) s
+            (SELECT *,ROW_NUMBER() OVER (ORDER BY sp.MaSP ASC) as row_index FROM SanPham sp) s
             WHERE row_index >= (4 -1)* 6 +1 AND row_index <= 4 * 6
 
+
+with t as (
+	SELECT h.MaHD,k.HoTen,u.HoTen as NguoiLap, h.Ngay  FROM 
+				HoaDon h inner join KhachHang k on h.MaKH = k.MaKH 
+                inner join [User] u on h.NguoiLap = u.ID
+                where k.RoleID = 4
+)
+SELECT s.MaHD,s.HoTen,s.NguoiLap,s.Ngay FROM 
+(SELECT *,ROW_NUMBER() OVER (ORDER BY MaHD ASC) as row_index FROM t ) s
+WHERE row_index >= (1-1)* 6 +1 AND row_index <= 1 * 6
+
+SELECT count(*) as Total FROM HoaDon h inner join KhachHang k on h.MaKH = k.MaKH 
+where k.RoleID = 4
+
+
+		   INSERT INTO HoaDon ( MaKH, NguoiLap, Ngay) 
+           VALUES  (1, 1,'2022-03-01');
+		   INSERT INTO HoaDon ( MaKH, NguoiLap, Ngay) 
+           VALUES  (2, 1,'2022-03-01');
+		   INSERT INTO HoaDon ( MaKH, NguoiLap, Ngay) 
+           VALUES  (3, 1,'2022-03-02');
+		   INSERT INTO HoaDon ( MaKH, NguoiLap, Ngay) 
+           VALUES  (3, 1,'2022-03-02');
+		   INSERT INTO CTHD(MaHD, MaSP, SoLuong) 
+           VALUES (9, 13, 1000);
+		   INSERT INTO CTHD(MaHD, MaSP, SoLuong) 
+           VALUES (9, 12, 1000);
+		   
+		   DELETE FROM CTHD 
+		   where MaHD = 9
+		   DELETE FROM [dbo].[HoaDon]
+           WHERE MaHD = 8 

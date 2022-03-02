@@ -27,13 +27,13 @@ function paggerClick(id, pageindex, totalpage, url, gap) {
 
     if (pageindex - gap > 1) {
 
-        result += '<a href="' + url + '?page=1" >Fisrt</a>'
+        result += '<a href="' + url + 'page=1" >Fisrt</a>'
 
     }
     for (var i = pageindex - gap; i < pageindex; i++) {
         if (i >= 1) {
 
-            result += '<a href="' + url + '?page=' + i + '" >' + i + '</a>'
+            result += '<a href="' + url + 'page=' + i + '" >' + i + '</a>'
         }
 
     }
@@ -43,14 +43,14 @@ function paggerClick(id, pageindex, totalpage, url, gap) {
 
         if (i <= totalpage) {
 
-            result += '<a href="' + url + '?page=' + i + '" >' + i + '</a>'
+            result += '<a href="' + url + 'page=' + i + '" >' + i + '</a>'
         }
 
     }
 
     if (pageindex + gap < totalpage) {
 
-        result += '<a href="' + url + '?page=' + totalpage + '" >Last</a>'
+        result += '<a href="' + url + 'page=' + totalpage + '" >Last</a>'
 
     }
 

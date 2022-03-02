@@ -25,7 +25,9 @@
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
         <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
         <title>Table</title>
-        <jsp:useBean id="customer" class="dal.CustomerDBContext" scope="request"></jsp:useBean>
+        
+        <link href="./assets/css/pager.css" rel="stylesheet" type="text/css"/>
+        <script src="./assets/js/pagger.js" type="text/javascript"></script>
         </head>
 
         <body>
@@ -68,23 +70,23 @@
                                         </thead>
                                         <tbody>
 
-                                        <c:forEach items="${customer.allCustomer}" var="c">
+                                        <c:forEach items="${customers}" var="c">
                                             <tr>
-                                                <td>${c.cId}</td>
-                                                <td>${c.cName}</td>
-                                                <td>0${c.cSdt}</td>
-                                                <td>${c.cAddress}</td>
-                                                <td>${c.role.rName}</td>
+                                                <td>${c.getcId()}</td>
+                                                <td>${c.getcName()}</td>
+                                                <td>0${c.getcSdt()}</td>
+                                                <td>${c.getcAddress()}</td>
+                                                <td>${c.getRole().getrName()}</td>
                                                 <td>
                                                     <p data-placement="top" data-toggle="tooltip" title="Edit"><button
                                                             class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal"
-                                                            data-target="#edit" onclick="location.href ='customer-edit?cId=${c.cId}'"><span
+                                                            data-target="#edit" onclick="location.href ='customer-edit?cId=${c.getcId()}'"><span
                                                                 class="glyphicon glyphicon-pencil"></span></button></p>
                                                 </td>
                                                 <td>
                                                     <p data-placement="top" data-toggle="tooltip" title="Delete"><button
                                                             class="btn btn-danger btn-xs" data-title="Delete"
-                                                            data-toggle="modal" data-target="#delete" onclick="deleteCustomer(${c.cId})" ><span
+                                                            data-toggle="modal" data-target="#delete" onclick="deleteCustomer(${c.getcId()})" ><span
                                                                 class="glyphicon glyphicon-trash"></span></button></p>
                                                 </td>
                                             </tr>
@@ -114,7 +116,7 @@
                 <jsp:include page="../common/footer.jsp"></jsp:include>
         </div>
         <script>
-            
+            paggerClick('paggerClick',${pageindex},${totalpage}, 'customer-list?', 2)
             function deleteCustomer(id)
             {
                 var result = confirm("Are you sure?");

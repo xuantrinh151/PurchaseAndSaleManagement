@@ -36,5 +36,8 @@ public class BillDetail {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
-    
+    public int getTotal()
+    {
+        return quantity * getProduct().getpPrice();
+    }
 }

@@ -120,7 +120,7 @@
             <jsp:include page="../common/footer.jsp"></jsp:include>
             </div>
             <script>
-            paggerClick('paggerClick',${pageindex},${totalpage}, 'paging', 2)
+            paggerClick('paggerClick',${pageindex},${totalpage}, 'product-list?', 2)
             function deleteProduct(id)
             {
                 var result = confirm("Are you sure?");

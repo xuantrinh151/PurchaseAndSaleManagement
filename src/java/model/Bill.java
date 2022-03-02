@@ -7,6 +7,7 @@ package model;
 
 
 import java.sql.Date;
+import java.util.ArrayList;
 
 /**
  *
@@ -18,6 +19,16 @@ public class Bill {
     
     private Customer customer;
     private User user;
+    private ArrayList<BillDetail> billDetails;
+
+    public ArrayList<BillDetail> getBillDetails() {
+        return billDetails;
+    }
+
+    public void setBillDetails(ArrayList<BillDetail> billDetails) {
+        this.billDetails = billDetails;
+    }
+    
 
     public int getbId() {
         return bId;
@@ -55,5 +66,12 @@ public class Bill {
         this.user = user;
     }
 
-    
+    public int getTotal()
+    {
+        int sum = 0;
+        for (BillDetail billDetail : billDetails) {
+            sum += billDetail.getTotal();
+        }
+        return sum;
+    }
 }

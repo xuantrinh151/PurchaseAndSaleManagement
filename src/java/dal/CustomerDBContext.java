@@ -239,4 +239,47 @@ public class CustomerDBContext extends DBContext {
         }
         return null;
     }
+    public ArrayList<Customer> getCustomers(int pageindex, int pagesize) {
+        ArrayList<Customer> customers = new ArrayList<>();
+        try {
+            String sql = "SELECT k.MaKH,k.HoTen,k.SDT,k.DiaChi,k.RoleID , k.Anh FROM \n"
+                    + "            (SELECT *,ROW_NUMBER() OVER (ORDER BY kh.MaKH ASC) as row_index FROM KhachHang kh) k\n"
+                    + "            WHERE row_index >= (? -1)* ? +1 AND row_index <= ? * ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, pageindex);
+            stm.setInt(2, pagesize);
+            stm.setInt(3, pageindex);
+            stm.setInt(4, pagesize);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                Customer c = new Customer();
+                c.setcId(rs.getInt("MaKH"));
+                c.setcName(rs.getString("HoTen"));
+                c.setcSdt(rs.getInt("SDT"));
+                c.setcAddress(rs.getString("DiaChi"));
+                Role r = new Role();
+                r.setrId(rs.getInt("RoleID"));
+                c.setRole(r);
+                c.setcImage(rs.getString("Anh"));
+                customers.add(c);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CustomerDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return customers;
+    }
+
+    public int count() {
+        try {
+            String sql = "SELECT count(*) as Total FROM KhachHang";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("Total");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CustomerDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return -1;
+    }
 }

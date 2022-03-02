@@ -16,6 +16,7 @@ import model.Bill;
 import model.BillDetail;
 import model.Customer;
 import model.Product;
+import model.Role;
 import model.User;
 
 /**
@@ -84,10 +85,6 @@ public class BillDBContext extends DBContext {
         }
         return bills;
     }
-    
-    
-    
-    
 
     public ArrayList<BillDetail> getBillDetail(int bId) {
         ArrayList<BillDetail> billDetails = new ArrayList<>();
@@ -154,8 +151,6 @@ public class BillDBContext extends DBContext {
         return null;
     }
 
-    
-
     public int getTotalBill(int bId) {
         int total = 0;
         String sql = "select h.MaHD, sum(s.Gia * c.SoLuong )  as Total from SanPham s \n"
@@ -176,6 +171,64 @@ public class BillDBContext extends DBContext {
         }
         return 0;
     }
-    
-    
+
+    public ArrayList<Bill> getBills(int pageindex, int pagesize, int kRole) {
+        ArrayList<Bill> bills = new ArrayList<>();
+        try {
+            String sql = "with t as (\n"
+                    + "	SELECT h.MaHD,k.HoTen,u.HoTen as NguoiLap, h.Ngay  FROM \n"
+                    + "                HoaDon h inner join KhachHang k on h.MaKH = k.MaKH \n"
+                    + "                inner join [User] u on h.NguoiLap = u.ID\n"
+                    + "                where k.RoleID = ?\n"
+                    + ")\n"
+                    + "SELECT s.MaHD,s.HoTen,s.NguoiLap,s.Ngay FROM \n"
+                    + "(SELECT *,ROW_NUMBER() OVER (ORDER BY MaHD ASC) as row_index FROM t ) s\n"
+                    + "WHERE row_index >= (? -1)* ? +1 AND row_index <= ? * ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, kRole);
+            stm.setInt(2, pageindex);
+            stm.setInt(3, pagesize);
+            stm.setInt(4, pageindex);
+            stm.setInt(5, pagesize);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                Bill b = new Bill();
+                b.setbId(rs.getInt("MaHD"));
+                Customer c = new Customer();
+                c.setcName(rs.getString("HoTen"));
+                b.setCustomer(c);
+                User u = new User();
+                u.setuName(rs.getString("NguoiLap"));
+                b.setUser(u);
+                b.setTime(rs.getDate("Ngay"));
+                bills.add(b);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(BillDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return bills;
+    }
+
+    public int count(int kRole) {
+        try {
+            String sql = "SELECT count(*) as Total FROM HoaDon h inner join KhachHang k on h.MaKH = k.MaKH \n"
+                    + "where k.RoleID = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, kRole);
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("Total");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CustomerDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return -1;
+    }
+    public static void main(String[] args) {
+        BillDBContext bd = new BillDBContext();
+        ArrayList<Bill> bills = bd.getBills(1, 6, 4);
+        for (Bill bill : bills) {
+            System.out.println(bill.getCustomer().getcName());
+        }
+    }
 }
