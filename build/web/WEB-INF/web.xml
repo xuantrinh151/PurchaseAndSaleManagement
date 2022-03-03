@@ -52,6 +52,18 @@
         <servlet-name>EditCustomerController</servlet-name>
         <servlet-class>controller.customer.EditCustomerController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>BillInsertController</servlet-name>
+        <servlet-class>controller.bill.BillInsertController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>BillDetailInsertController</servlet-name>
+        <servlet-class>controller.bill.BillDetailInsertController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>BillDetailEditController</servlet-name>
+        <servlet-class>controller.bill.BillDetailEditController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomeController</servlet-name>
         <url-pattern>/home</url-pattern>
@@ -107,6 +119,18 @@
     <servlet-mapping>
         <servlet-name>EditCustomerController</servlet-name>
         <url-pattern>/customer-edit</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BillInsertController</servlet-name>
+        <url-pattern>/bill-add</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BillDetailInsertController</servlet-name>
+        <url-pattern>/billDetail-add</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BillDetailEditController</servlet-name>
+        <url-pattern>/billDetail-edit</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

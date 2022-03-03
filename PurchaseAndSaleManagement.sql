@@ -49,7 +49,7 @@ ALTER TABLE SanPham ADD Anh nvarchar(max);
 ALTER TABLE HoaDon DROP COLUMN TongTien;
 ALTER TABLE SanPham ALTER COLUMN Gia int NOT NULL;
 ALTER TABLE [User] ADD Anh nvarchar(max);
-
+ALTER TABLE CTHD ADD id int IDENTITY(1, 1) NOT NULL;
 
 ---INSERT USER
 

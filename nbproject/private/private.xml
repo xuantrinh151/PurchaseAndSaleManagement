@@ -12,12 +12,19 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/Users/xuant/OneDrive/Desktop/PurchaseAndSaleManagement/web/view/bill/billDetailEdit.jsp</file>
+            <file>file:/C:/Users/xuant/OneDrive/Desktop/PurchaseAndSaleManagement/src/java/controller/bill/BillDetailController.java</file>
             <file>file:/C:/Users/xuant/OneDrive/Desktop/PurchaseAndSaleManagement/web/view/bill/billList.jsp</file>
             <file>file:/C:/Users/xuant/OneDrive/Desktop/PurchaseAndSaleManagement/web/view/product/productList.jsp</file>
-            <file>file:/C:/Users/xuant/OneDrive/Desktop/PurchaseAndSaleManagement/src/java/dal/CustomerDBContext.java</file>
-            <file>file:/C:/Users/xuant/OneDrive/Desktop/PurchaseAndSaleManagement/src/java/controller/bill/BillListController.java</file>
-            <file>file:/C:/Users/xuant/OneDrive/Desktop/PurchaseAndSaleManagement/web/assets/js/pagger.js</file>
-            <file>file:/C:/Users/xuant/OneDrive/Desktop/PurchaseAndSaleManagement/src/java/controller/product/ProductListController.java</file>
+            <file>file:/C:/Users/xuant/OneDrive/Desktop/PurchaseAndSaleManagement/src/java/dal/ProductDBContext.java</file>
+            <file>file:/C:/Users/xuant/OneDrive/Desktop/PurchaseAndSaleManagement/src/java/controller/bill/BillInsertController.java</file>
+            <file>file:/C:/Users/xuant/OneDrive/Desktop/PurchaseAndSaleManagement/web/view/bill/billDetail.jsp</file>
+            <file>file:/C:/Users/xuant/OneDrive/Desktop/PurchaseAndSaleManagement/web/view/bill/billInsert.jsp</file>
+            <file>file:/C:/Users/xuant/OneDrive/Desktop/PurchaseAndSaleManagement/src/java/model/BillDetail.java</file>
+            <file>file:/C:/Users/xuant/OneDrive/Desktop/PurchaseAndSaleManagement/web/view/bill/billDetailInsert.jsp</file>
+            <file>file:/C:/Users/xuant/OneDrive/Desktop/PurchaseAndSaleManagement/web/view/product/edit.jsp</file>
+            <file>file:/C:/Users/xuant/OneDrive/Desktop/PurchaseAndSaleManagement/src/java/controller/bill/BillDetailEditController.java</file>
+            <file>file:/C:/Users/xuant/OneDrive/Desktop/PurchaseAndSaleManagement/src/java/controller/bill/BillDetailInsertController.java</file>
             <file>file:/C:/Users/xuant/OneDrive/Desktop/PurchaseAndSaleManagement/src/java/dal/BillDBContext.java</file>
             <file>file:/C:/Users/xuant/OneDrive/Desktop/PurchaseAndSaleManagement/src/java/model/Bill.java</file>
         </group>

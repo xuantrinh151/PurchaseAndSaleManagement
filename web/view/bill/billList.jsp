@@ -39,7 +39,7 @@
                             <div class="col-md-12">
                                 <div class="right-header">
                                     <h4>List of products sold</h4>
-                                    <button type="button" class="btn btn-primary btn-add">Add Bill</button>
+                                    <button type="button" onclick="location.href ='bill-add' " class="btn btn-primary btn-add">Add Bill</button>
                                 </div>
                                 <form>
                                     <div class="form-group row">

@@ -6,6 +6,15 @@
 package model;
 
 public class BillDetail {
+    private int bdId;
+
+    public int getBdId() {
+        return bdId;
+    }
+
+    public void setBdId(int bdId) {
+        this.bdId = bdId;
+    }
     private Bill bill;
     private Product product;
     private int quantity;

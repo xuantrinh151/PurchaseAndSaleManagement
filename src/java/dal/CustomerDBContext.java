@@ -282,4 +282,9 @@ public class CustomerDBContext extends DBContext {
         }
         return -1;
     }
+    public static void main(String[] args) {
+        CustomerDBContext b =new CustomerDBContext();
+        Customer c = b.getCustomer(1);
+        System.out.println(c.getcName());
+    }
 }

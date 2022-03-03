@@ -15,6 +15,16 @@ public class User {
     private String uAccount;
     private String uPassword;
     private Role role;
+    private String uImage;
+
+    public String getuImage() {
+        return uImage;
+    }
+
+    public void setuImage(String uImage) {
+        this.uImage = uImage;
+    }
+    
 
     public int getuId() {
         return uId;

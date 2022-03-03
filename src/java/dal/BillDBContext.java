@@ -9,6 +9,7 @@ import java.math.BigDecimal;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -220,15 +221,160 @@ public class BillDBContext extends DBContext {
                 return rs.getInt("Total");
             }
         } catch (SQLException ex) {
-            Logger.getLogger(CustomerDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(BillDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
         return -1;
     }
+
+    public int addBill(Bill b) {
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        String sql = "INSERT INTO [HoaDon]\n"
+                + "           ([MaKH]\n"
+                + "           ,[NguoiLap]\n"
+                + "           ,[Ngay])\n"
+                + "     VALUES\n"
+                + "           (?,?,?)";
+        int pId = 0;
+        try {
+
+            stm = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            stm.setInt(1, b.getCustomer().getcId());
+            stm.setInt(2, b.getUser().getuId());
+            stm.setDate(3, b.getTime());
+            stm.executeUpdate();
+            rs = stm.getGeneratedKeys();
+            if (rs.next()) {
+                pId = rs.getInt(1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(BillDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                // Close Result Set Object
+                if (rs != null) {
+                    rs.close();
+                }
+                // Close Prepared Statement Object      
+                if (stm != null) {
+                    stm.close();
+                }
+                // Close Connection Object      
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException sqlException) {
+            }
+        }
+        return pId;
+    }
+
+    public void addBillDetail(BillDetail bd) {
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        String sql = "INSERT INTO [CTHD]\n"
+                + "           ([MaHD]\n"
+                + "           ,[MaSP]\n"
+                + "           ,[SoLuong])\n"
+                + "     VALUES (?,? ,?)";
+
+        try {
+
+            stm = connection.prepareStatement(sql);
+            stm.setInt(1, bd.getBill().getbId());
+            stm.setInt(2, bd.getProduct().getpId());
+            stm.setInt(3, bd.getQuantity());
+            stm.executeUpdate();
+            rs = stm.getGeneratedKeys();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(BillDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                // Close Result Set Object
+                if (rs != null) {
+                    rs.close();
+                }
+                // Close Prepared Statement Object      
+                if (stm != null) {
+                    stm.close();
+                }
+                // Close Connection Object      
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException sqlException) {
+            }
+        }
+    }
+
+    public void editBillDetail(BillDetail bd) {
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        String sql = " UPDATE [CTHD]\n"
+                + "  SET [MaSP] = ?,[SoLuong] = ?\n"
+                + "  WHERE MaHD = ? and id = ?";
+
+        try {
+
+            stm = connection.prepareStatement(sql);
+            stm.setInt(1, bd.getProduct().getpId());
+            stm.setInt(2, bd.getQuantity());
+            stm.setInt(3, bd.getBill().getbId());
+            stm.setInt(4, bd.getBdId());
+            stm.executeUpdate();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(BillDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                // Close Result Set Object
+                if (rs != null) {
+                    rs.close();
+                }
+                // Close Prepared Statement Object      
+                if (stm != null) {
+                    stm.close();
+                }
+                // Close Connection Object      
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException sqlException) {
+            }
+        }
+
+    }
+
+    public BillDetail getBillDetail(int pId, int bId) {
+        String sql = "SELECT TOP (1000) [MaHD] ,[MaSP],[SoLuong],[id]\n"
+                + "  FROM [CTHD] WHERE MaHD = ? and MaSP = ?";
+        try {
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, bId);
+            stm.setInt(2, pId);
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                BillDetail bd = new BillDetail();
+                Bill b = new Bill();
+                b.setbId(rs.getInt("MaHD"));
+                Product p = new Product();
+                p.setpId(rs.getInt("MaSP"));
+                bd.setBill(b);
+                bd.setProduct(p);
+                bd.setBdId(rs.getInt("id"));
+                bd.setQuantity(rs.getInt("SoLuong"));
+                return bd;
+
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(BillDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
     public static void main(String[] args) {
         BillDBContext bd = new BillDBContext();
-        ArrayList<Bill> bills = bd.getBills(1, 6, 4);
-        for (Bill bill : bills) {
-            System.out.println(bill.getCustomer().getcName());
-        }
+        System.out.println(bd.getBillDetail(21, 13).getBdId());
     }
 }
