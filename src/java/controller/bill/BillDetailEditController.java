@@ -71,6 +71,4 @@ public class BillDetailEditController extends HttpServlet {
         response.sendRedirect("bill-detail?bid=" + bId);
     }
 
-    
-
 }

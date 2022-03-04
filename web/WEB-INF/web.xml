@@ -64,6 +64,18 @@
         <servlet-name>BillDetailEditController</servlet-name>
         <servlet-class>controller.bill.BillDetailEditController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>BillEditController</servlet-name>
+        <servlet-class>controller.bill.BillEditController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>BillDetailDeleteController</servlet-name>
+        <servlet-class>controller.bill.BillDetailDeleteController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>BillDeleteController</servlet-name>
+        <servlet-class>controller.bill.BillDeleteController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomeController</servlet-name>
         <url-pattern>/home</url-pattern>
@@ -131,6 +143,18 @@
     <servlet-mapping>
         <servlet-name>BillDetailEditController</servlet-name>
         <url-pattern>/billDetail-edit</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BillEditController</servlet-name>
+        <url-pattern>/bill-edit</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BillDetailDeleteController</servlet-name>
+        <url-pattern>/billDetail-delete</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BillDeleteController</servlet-name>
+        <url-pattern>/bill-delete</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

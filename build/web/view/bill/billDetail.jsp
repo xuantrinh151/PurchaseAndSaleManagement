@@ -76,7 +76,9 @@
                                                 <td>
                                                     <p data-placement="top" data-toggle="tooltip" title="Delete"><button
                                                             class="btn btn-danger btn-xs" data-title="Delete"
-                                                            data-toggle="modal" data-target="#delete"><span
+                                                            data-toggle="modal" data-target="#delete"
+                                                            onclick="deleteBillDetail(${b.getBdId()})"
+                                                            ><span
                                                                 class="glyphicon glyphicon-trash"></span></button></p>
                                                 </td>
                                             </tr>
@@ -98,6 +100,16 @@
                 </div>
             </div>
         </div>
+                     <script>
+            function deleteBillDetail(id)
+            {
+                var result = confirm("Are you sure?");
+                if(result)
+                {
+                    window.location.href = "billDetail-delete?bdId=" + id + "&bId=${bill.getbId()}";
+                }
+            }
+        </script>
     </body>
 </html>
 

@@ -78,13 +78,17 @@
                                                 <td>
                                                     <p data-placement="top" data-toggle="tooltip" title="Edit"><button
                                                             class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal"
-                                                            data-target="#edit"><span
+                                                            data-target="#edit"  
+                                                            onclick="location.href ='bill-edit?bId=${b.bId}'"
+                                                            ><span
                                                                 class="glyphicon glyphicon-pencil"></span></button></p>
                                                 </td>
                                                 <td>
                                                     <p data-placement="top" data-toggle="tooltip" title="Delete"><button
                                                             class="btn btn-danger btn-xs" data-title="Delete"
-                                                            data-toggle="modal" data-target="#delete"><span
+                                                            data-toggle="modal" data-target="#delete"
+                                                            onclick="deleteBill(${b.bId})"
+                                                            ><span
                                                                 class="glyphicon glyphicon-trash"></span></button></p>
                                                 </td>
                                             </tr>
@@ -114,12 +118,12 @@
             </div>
             <script>
     paggerClick('paggerClick',${pageindex},${totalpage}, 'bill-list?kRole=${kRole}&', 2)
-    function deleteProduct(id)
+    function deleteBill(id)
     {
         var result = confirm("Are you sure?");
         if (result)
         {
-            window.location.href = "product-delete?pId=" + id;
+            window.location.href = "bill-delete?bId=" + id;
         }
     }
         </script>

@@ -204,7 +204,7 @@ from KhachHang k inner join HoaDon h on k.MaKH = h.MaKH
 
 select * from HoaDon h where h.MaHD = 2
 
-SELECT h.MaHD,k.HoTen,u.Hoten as NguoiLap, h.Ngay  FROM HoaDon h
+SELECT h.MaHD,k.HoTen,u.Hoten as NguoiLap, h.Ngay ,k.MaKH ,k.RoleID ,u.ID FROM HoaDon h
 				inner join KhachHang k on h.MaKH = k.MaKH 
               inner join [User] u on h.NguoiLap = u.ID where h.MaHD = 2
 

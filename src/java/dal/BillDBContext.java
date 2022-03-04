@@ -89,7 +89,7 @@ public class BillDBContext extends DBContext {
 
     public ArrayList<BillDetail> getBillDetail(int bId) {
         ArrayList<BillDetail> billDetails = new ArrayList<>();
-        String sql = "SELECT k.MaKH,k.HoTen,k.SDT,k.DiaChi,k.RoleID,k.Anh ,c.MaHD,c.MaSP,c.SoLuong,s.TenSP, s.Gia,s.Gia * c.SoLuong as BillMoney,h.Ngay ,u.Hoten\n"
+        String sql = "SELECT k.MaKH,k.HoTen,k.SDT,k.DiaChi,k.RoleID,k.Anh ,c.MaHD,c.MaSP,c.SoLuong,c.id,s.TenSP, s.Gia,s.Gia * c.SoLuong as BillMoney,h.Ngay ,u.Hoten\n"
                 + "from KhachHang k inner join HoaDon h on k.MaKH = h.MaKH \n"
                 + "	inner join CTHD c on h.MaHD = c.MaHD\n"
                 + "	inner join SanPham s on c.MaSP = s.MaSP\n"
@@ -118,6 +118,7 @@ public class BillDBContext extends DBContext {
                 p.setpPrice(rs.getInt("Gia"));
                 bd.setProduct(p);
                 bd.setQuantity(rs.getInt("SoLuong"));
+                bd.setBdId(rs.getInt("id"));
                 billDetails.add(bd);
             }
         } catch (SQLException ex) {
@@ -128,9 +129,9 @@ public class BillDBContext extends DBContext {
 
     public Bill getBillById(int bId) {
         Bill b = new Bill();
-        String sql = "SELECT h.MaHD,k.HoTen,u.Hoten as NguoiLap, h.Ngay  FROM HoaDon h\n"
-                + "inner join KhachHang k on h.MaKH = k.MaKH \n"
-                + "inner join [User] u on h.NguoiLap = u.ID where h.MaHD = ?";
+        String sql = "SELECT h.MaHD,k.HoTen,u.Hoten as NguoiLap, h.Ngay ,k.MaKH ,k.RoleID ,u.ID FROM HoaDon h\n"
+                + "				inner join KhachHang k on h.MaKH = k.MaKH \n"
+                + "              inner join [User] u on h.NguoiLap = u.ID where h.MaHD = ?";
         try {
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, bId);
@@ -140,9 +141,15 @@ public class BillDBContext extends DBContext {
                 b.setTime(rs.getDate("Ngay"));
                 Customer c = new Customer();
                 c.setcName(rs.getString("HoTen"));
+                c.setcId(rs.getInt("MaKH"));
+                Role r = new Role();
+                r.setrId(rs.getInt("RoleID"));
+                c.setRole(r);
+                
                 b.setCustomer(c);
                 User u = new User();
                 u.setuName(rs.getString("NguoiLap"));
+                u.setuId(rs.getInt("ID"));
                 b.setUser(u);
                 return b;
             }
@@ -373,8 +380,133 @@ public class BillDBContext extends DBContext {
         return null;
     }
 
+    public void editBill(Bill b) {
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+
+        String sql = "UPDATE [HoaDon]\n"
+                + "SET [MaKH] =  ?,[NguoiLap] = ?,[Ngay] = ?\n"
+                + "WHERE [MaHD] = ?";
+        try {
+            stm = connection.prepareStatement(sql);
+            stm.setInt(1, b.getCustomer().getcId());
+            stm.setInt(2, b.getUser().getuId());
+            stm.setDate(3, b.getTime());
+            stm.setInt(4, b.getbId());
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(BillDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                // Close Result Set Object
+                if (rs != null) {
+                    rs.close();
+                }
+                // Close Prepared Statement Object      
+                if (stm != null) {
+                    stm.close();
+                }
+                // Close Connection Object      
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException sqlException) {
+            }
+        }
+
+    }
+
+    public void deleteBillDetail(int bdId) {
+        String sql = "DELETE FROM [CTHD]\n"
+                + "      WHERE id = ?";
+        PreparedStatement stm = null;
+        try {
+            stm = connection.prepareStatement(sql);
+            stm.setInt(1, bdId);
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(BillDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (stm != null) {
+                try {
+                    stm.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(BillDBContext.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(BillDBContext.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+    }
+
+    public void deleteBill(int bId) {
+        PreparedStatement stm_deleteBillDetail = null;
+        PreparedStatement stm_deleteBill = null;
+        try {
+            String sql_deleteBillDetail = "DELETE FROM [CTHD]\n"
+                    + "      WHERE MaHD = ?";
+
+            String sql_deleteBill = "DELETE FROM [HoaDon]\n"
+                    + "      WHERE MaHD  = ?";
+            connection.setAutoCommit(false);
+
+            stm_deleteBillDetail = connection.prepareStatement(sql_deleteBillDetail);
+            stm_deleteBillDetail.setInt(1, bId);
+            stm_deleteBillDetail.executeUpdate();
+            
+            stm_deleteBill = connection.prepareStatement(sql_deleteBill);
+            stm_deleteBill.setInt(1, bId);
+            stm_deleteBill.executeUpdate();
+            
+            connection.commit();
+        } catch (SQLException ex) {
+            Logger.getLogger(BillDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            try {
+                connection.rollback();
+            } catch (SQLException ex1) {
+                Logger.getLogger(BillDBContext.class.getName()).log(Level.SEVERE, null, ex1);
+            }
+        } finally {
+            try {
+                connection.setAutoCommit(true);
+            } catch (SQLException ex) {
+                Logger.getLogger(BillDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            //close connection       
+            //close connection       
+            if (stm_deleteBillDetail != null) {
+                try {
+                    stm_deleteBillDetail.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(BillDBContext.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (stm_deleteBill != null) {
+                try {
+                    stm_deleteBill.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(BillDBContext.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(BillDBContext.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+
+    }
+
     public static void main(String[] args) {
         BillDBContext bd = new BillDBContext();
-        System.out.println(bd.getBillDetail(21, 13).getBdId());
+        System.out.println(bd.getBillById(13).getCustomer().getcId());
     }
 }
