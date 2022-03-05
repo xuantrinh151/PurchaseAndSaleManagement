@@ -5,6 +5,7 @@
  */
 package controller.product;
 
+import controller.authorization.BaseAuthorizationController;
 import dal.ProductDBContext;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -23,14 +24,14 @@ import model.Product;
  * @author xuant
  */
 @MultipartConfig
-public class EditProductController extends HttpServlet {
+public class EditProductController extends BaseAuthorizationController {
 
     
     
 
    
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void processGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         int pId = Integer.parseInt(request.getParameter("pId"));
@@ -48,7 +49,7 @@ public class EditProductController extends HttpServlet {
 
     
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void processPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         int pId = Integer.parseInt(request.getParameter("product_id"));

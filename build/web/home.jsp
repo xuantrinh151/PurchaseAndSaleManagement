@@ -35,7 +35,7 @@
                         <div class="overview">
                             <div class="hello-admin">
                                 <p>
-                                    Xin Chào Nhà Vườn Phương Viên
+                                    Xin Chào ${sessionScope.user.getuName()}
                                 </p>
                                 <p >
                                     Chúc bạn một ngày tốt lành,bán được thật nhiều hàng nhé

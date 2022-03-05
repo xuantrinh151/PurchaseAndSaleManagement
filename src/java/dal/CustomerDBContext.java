@@ -242,8 +242,9 @@ public class CustomerDBContext extends DBContext {
     public ArrayList<Customer> getCustomers(int pageindex, int pagesize) {
         ArrayList<Customer> customers = new ArrayList<>();
         try {
-            String sql = "SELECT k.MaKH,k.HoTen,k.SDT,k.DiaChi,k.RoleID , k.Anh FROM \n"
-                    + "            (SELECT *,ROW_NUMBER() OVER (ORDER BY kh.MaKH ASC) as row_index FROM KhachHang kh) k\n"
+            String sql = "SELECT k.MaKH,k.HoTen,k.SDT,k.DiaChi,k.RoleID , k.Anh,k.Name as rName FROM \n"
+                    + "            (SELECT *,ROW_NUMBER() OVER (ORDER BY kh.MaKH ASC) as row_index FROM KhachHang kh"
+                    + "            inner join Role r on r.ID = kh.RoleID) k\n"
                     + "            WHERE row_index >= (? -1)* ? +1 AND row_index <= ? * ?";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, pageindex);
@@ -259,6 +260,7 @@ public class CustomerDBContext extends DBContext {
                 c.setcAddress(rs.getString("DiaChi"));
                 Role r = new Role();
                 r.setrId(rs.getInt("RoleID"));
+                r.setrName(rs.getString("rName"));
                 c.setRole(r);
                 c.setcImage(rs.getString("Anh"));
                 customers.add(c);
@@ -282,9 +284,5 @@ public class CustomerDBContext extends DBContext {
         }
         return -1;
     }
-    public static void main(String[] args) {
-        CustomerDBContext b =new CustomerDBContext();
-        Customer c = b.getCustomer(1);
-        System.out.println(c.getcName());
-    }
+    
 }

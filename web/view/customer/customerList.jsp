@@ -24,6 +24,7 @@
         <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
         <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <title>Table</title>
         
         <link href="./assets/css/pager.css" rel="stylesheet" type="text/css"/>
@@ -47,7 +48,7 @@
                                     <div class="form-group row">
                                         <div class="inputSearch col-xs-3">
                                             <label for="ex1">Search:</label>
-                                            <input class="form-control" id="ex1" type="text">
+                                            <input class="form-control" id="myInput" type="text" >
                                         </div>
 
                                     </div>
@@ -68,7 +69,7 @@
 
                                         <th>Delete</th>
                                         </thead>
-                                        <tbody>
+                                        <tbody id="myTable">
 
                                         <c:forEach items="${customers}" var="c">
                                             <tr>
@@ -125,6 +126,14 @@
                     window.location.href = "customer-delete?cId=" + id;
                 }
             }
+            $(document).ready(function () {
+                    $("#myInput").on("keyup", function () {
+                        var value = $(this).val().toLowerCase();
+                        $("#myTable tr").filter(function () {
+                            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                        });
+                    });
+                });
         </script>
     </body>
 

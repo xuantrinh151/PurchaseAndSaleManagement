@@ -19,15 +19,37 @@ import model.User;
  * @author xuant
  */
 public abstract class BaseAuthorizationController extends HttpServlet {
-
+    
+    private static final String[] requiredURLs = {
+            "edit", "add", "delete"
+    };
+    
+     private boolean isLoginRequired(HttpServletRequest request) {
+         String url = request.getServletPath();
+         for (String requiredURL : requiredURLs) {
+             if (url.contains(requiredURL)) {
+                return true;
+            }
+         }
+        return false;
+    }
+    
     public boolean isAuth(HttpServletRequest request) {
         User user = (User) request.getSession().getAttribute("user");
         if (user == null) {
             return false;
         } else {
-            return true;
+            
+            if(user.getRole().getrId()==1 ){
+                return true;
+            }
+            else {
+                if(isLoginRequired(request)){
+                   return false;
+                }
+            }
         }
-
+        return true;
     }
 
     @Override
@@ -37,7 +59,7 @@ public abstract class BaseAuthorizationController extends HttpServlet {
             //business
             processGet(request, response);
         } else {
-            response.sendRedirect("login?action=login");
+            response.sendRedirect("login?action=login&message=Not Permission&alert=danger");
         }
     }
 
@@ -54,7 +76,7 @@ public abstract class BaseAuthorizationController extends HttpServlet {
             //business
             processPost(request, response);
         } else {
-            response.sendRedirect("login?action=login");
+            response.sendRedirect("login?action=login&message=Not Permission&alert=danger");
         }
     }
 

@@ -5,6 +5,7 @@
  */
 package controller.customer;
 
+import controller.authorization.BaseAuthorizationController;
 import dal.CustomerDBContext;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -24,14 +25,14 @@ import model.Role;
  * @author xuant
  */
 @MultipartConfig
-public class EditCustomerController extends HttpServlet {
+public class EditCustomerController extends BaseAuthorizationController {
 
     
    
 
     
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void processGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         int cId = Integer.parseInt(request.getParameter("cId"));
@@ -49,7 +50,7 @@ public class EditCustomerController extends HttpServlet {
 
     
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void processPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
          request.setCharacterEncoding("UTF-8");
         CustomerDBContext cdbc = new CustomerDBContext();

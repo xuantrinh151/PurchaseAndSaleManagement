@@ -5,6 +5,7 @@
  */
 package controller.bill;
 
+import controller.authorization.BaseAuthorizationController;
 import dal.BillDBContext;
 import dal.CustomerDBContext;
 import dal.UserDBContext;
@@ -26,10 +27,10 @@ import model.User;
  * @author xuant
  */
 @MultipartConfig
-public class BillInsertController extends HttpServlet {
+public class BillInsertController extends BaseAuthorizationController {
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void processGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         String message = request.getParameter("message");
@@ -48,7 +49,7 @@ public class BillInsertController extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void processPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String cId = request.getParameter("customer");
         String uId = request.getParameter("user");

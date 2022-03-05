@@ -505,8 +505,5 @@ public class BillDBContext extends DBContext {
 
     }
 
-    public static void main(String[] args) {
-        BillDBContext bd = new BillDBContext();
-        System.out.println(bd.getBillById(13).getCustomer().getcId());
-    }
+    
 }

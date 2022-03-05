@@ -23,6 +23,7 @@
         <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
         <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <title>Table</title>
         <jsp:useBean id= "bill" class="dal.BillDBContext" scope="request"></jsp:useBean>
         </head>
@@ -39,13 +40,13 @@
                             <div class="col-md-12">
                                 <div class="right-header">
                                     <h4>List of products sold</h4>
-                                    <button type="button" onclick="location.href ='bill-add' " class="btn btn-primary btn-add">Add Bill</button>
+                                    <button type="button" onclick="location.href = 'bill-add'" class="btn btn-primary btn-add">Add Bill</button>
                                 </div>
                                 <form>
                                     <div class="form-group row">
                                         <div class="inputSearch col-xs-3">
                                             <label for="ex1">Search:</label>
-                                            <input class="form-control" id="ex1" type="text">
+                                            <input class="form-control" id="myInput" type="text" >
                                         </div>
 
                                     </div>
@@ -66,7 +67,7 @@
 
                                         <th>Delete</th>
                                         </thead>
-                                        <tbody>
+                                        <tbody id="myTable">
 
                                         <c:forEach items="${bills}" var="b" varStatus="status">
                                             <tr>
@@ -79,7 +80,7 @@
                                                     <p data-placement="top" data-toggle="tooltip" title="Edit"><button
                                                             class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal"
                                                             data-target="#edit"  
-                                                            onclick="location.href ='bill-edit?bId=${b.bId}'"
+                                                            onclick="location.href = 'bill-edit?bId=${b.bId}'"
                                                             ><span
                                                                 class="glyphicon glyphicon-pencil"></span></button></p>
                                                 </td>
@@ -117,15 +118,23 @@
             <jsp:include page="../common/footer.jsp"></jsp:include>
             </div>
             <script>
-    paggerClick('paggerClick',${pageindex},${totalpage}, 'bill-list?kRole=${kRole}&', 2)
-    function deleteBill(id)
-    {
-        var result = confirm("Are you sure?");
-        if (result)
-        {
-            window.location.href = "bill-delete?bId=" + id;
-        }
-    }
+                paggerClick('paggerClick',${pageindex},${totalpage}, 'bill-list?kRole=${kRole}&', 2)
+                function deleteBill(id)
+                {
+                    var result = confirm("Are you sure?");
+                    if (result)
+                    {
+                        window.location.href = "bill-delete?bId=" + id;
+                    }
+                }
+                $(document).ready(function () {
+                    $("#myInput").on("keyup", function () {
+                        var value = $(this).val().toLowerCase();
+                        $("#myTable tr").filter(function () {
+                            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                        });
+                    });
+                });
         </script>
     </body>
 

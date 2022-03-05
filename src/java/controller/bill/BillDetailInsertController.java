@@ -5,6 +5,7 @@
  */
 package controller.bill;
 
+import controller.authorization.BaseAuthorizationController;
 import dal.BillDBContext;
 import dal.ProductDBContext;
 import java.io.IOException;
@@ -22,14 +23,14 @@ import model.Product;
  *
  * @author xuant
  */
-public class BillDetailInsertController extends HttpServlet {
+public class BillDetailInsertController extends BaseAuthorizationController {
 
     
     
 
     
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void processGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         ProductDBContext pdbc = new ProductDBContext();
         ArrayList<Product> products = pdbc.getAllProduct();
@@ -42,7 +43,7 @@ public class BillDetailInsertController extends HttpServlet {
 
    
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void processPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String raw_bId = request.getParameter("bill_id");
         String raw_pId = request.getParameter("products");
