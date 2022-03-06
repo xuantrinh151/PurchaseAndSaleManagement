@@ -262,3 +262,8 @@ where k.RoleID = 4
 		   where MaHD = 9
 		   DELETE FROM [dbo].[HoaDon]
            WHERE MaHD = 8 
+
+		   SELECT k.MaKH,k.HoTen,k.SDT,k.DiaChi,k.RoleID , k.Anh ,k.Name as rName FROM 
+                   (SELECT *,ROW_NUMBER() OVER (ORDER BY kh.MaKH ASC) as row_index FROM KhachHang kh
+				   inner join Role r on r.ID = kh.RoleID) k
+                   WHERE row_index >= (1 -1)* 6 +1 AND row_index <= 1 * 6
