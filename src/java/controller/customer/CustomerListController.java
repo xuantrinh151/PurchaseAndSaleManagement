@@ -27,6 +27,8 @@ public class CustomerListController extends BaseAuthorizationController {
     @Override
     protected void processGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
+        String keyWord = request.getParameter("keyWord");
         CustomerDBContext cdbc = new CustomerDBContext();
         String page = request.getParameter("page");
         if(page ==null || page.trim().length() ==0)
@@ -35,10 +37,10 @@ public class CustomerListController extends BaseAuthorizationController {
         }
         int pagesize = 6;
         int pageindex = Integer.parseInt(page);
-        ArrayList<Customer> customers = cdbc.getCustomers(pageindex,pagesize);
+        ArrayList<Customer> customers = cdbc.getCustomers(pageindex,pagesize,keyWord);
         request.setAttribute("customers", customers);
         
-        int numofrecords = cdbc.count();
+        int numofrecords = cdbc.count(keyWord);
         int totalpage = (numofrecords % pagesize ==0)?(numofrecords/pagesize)
                 :(numofrecords/pagesize) + 1;
         request.setAttribute("totalpage", totalpage);
@@ -51,6 +53,8 @@ public class CustomerListController extends BaseAuthorizationController {
     @Override
     protected void processPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+       
     }
 
 

@@ -26,10 +26,6 @@ import model.Product;
 @MultipartConfig
 public class EditProductController extends BaseAuthorizationController {
 
-    
-    
-
-   
     @Override
     protected void processGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -38,7 +34,7 @@ public class EditProductController extends BaseAuthorizationController {
         ProductDBContext pdbc = new ProductDBContext();
         Product product = pdbc.getProduct(pId);
         request.setAttribute("product", product);
-         String message = request.getParameter("message");
+        String message = request.getParameter("message");
         String alert = request.getParameter("alert");
         if (message != null && alert != null) {
             request.setAttribute("message", message);
@@ -47,7 +43,6 @@ public class EditProductController extends BaseAuthorizationController {
         request.getRequestDispatcher("/view/product/edit.jsp").forward(request, response);
     }
 
-    
     @Override
     protected void processPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -57,28 +52,32 @@ public class EditProductController extends BaseAuthorizationController {
         int pPrice = Integer.parseInt(request.getParameter("product_price"));
         String pType = request.getParameter("product_categorie");
         Part file = request.getPart("image");
-        
+        ProductDBContext pdbc = new ProductDBContext();
         String imageFileName = file.getSubmittedFileName();
-        String uploadPath = "C:/Users/xuant/OneDrive/Desktop/PurchaseAndSaleManagement/web/assets/img/" + imageFileName;
-        try (FileOutputStream fos = new FileOutputStream(uploadPath)) {
-            InputStream is = file.getInputStream();
-            byte[] data = new byte[is.available()];
-            is.read(data);
-            fos.write(data);
-        }
+        if (imageFileName != "") {
+            String uploadPath = "C:/Users/xuant/OneDrive/Desktop/PurchaseAndSaleManagement/web/assets/img/" + imageFileName;
+            try (FileOutputStream fos = new FileOutputStream(uploadPath)) {
+                InputStream is = file.getInputStream();
+                byte[] data = new byte[is.available()];
+                is.read(data);
+                fos.write(data);
+            }
 
-        Product p = new Product();
+        }
+        
+        Product p = pdbc.getProduct(pId);
         p.setpId(pId);
         p.setpName(pName);
         p.setpPrice(pPrice);
-        p.setpImage(imageFileName);
+        if (imageFileName != "") {
+            p.setpImage(imageFileName);
+        }
+
         p.setpType(pType);
-        ProductDBContext pdbc = new ProductDBContext();
+
         pdbc.editProduct(p);
         response.sendRedirect("product-list");
-                
-    }
 
-    
+    }
 
 }

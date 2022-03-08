@@ -26,13 +26,13 @@
         <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <title>Table</title>
-        
+
         <link href="./assets/css/pager.css" rel="stylesheet" type="text/css"/>
         <script src="./assets/js/pagger.js" type="text/javascript"></script>
-        </head>
+    </head>
 
-        <body>
-            <div id="main">
+    <body>
+        <div id="main">
             <jsp:include page="../common/header.jsp"></jsp:include>
                 <div id="body">
                 <jsp:include page="../common/left.jsp"></jsp:include>
@@ -42,13 +42,14 @@
                             <div class="col-md-12">
                                 <div class="right-header">
                                     <h4>List of customers</h4>
-                                    <button type="button" onclick="location.href ='customer-add' " class="btn btn-primary btn-add">Add Customer</button>
+                                    <button type="button" onclick="location.href = 'customer-add'" class="btn btn-primary btn-add">Add Customer</button>
                                 </div>
-                                <form>
+                                <form action="customer-list" method="GET">
                                     <div class="form-group row">
                                         <div class="inputSearch col-xs-3">
                                             <label for="ex1">Search:</label>
-                                            <input class="form-control" id="myInput" type="text" >
+                                            <input oninput="search(this)" class="form-control" id="myInput" type="text" name="keyword">
+                                            <input type="submit" value="Search"/>
                                         </div>
 
                                     </div>
@@ -81,7 +82,7 @@
                                                 <td>
                                                     <p data-placement="top" data-toggle="tooltip" title="Edit"><button
                                                             class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal"
-                                                            data-target="#edit" onclick="location.href ='customer-edit?cId=${c.getcId()}'"><span
+                                                            data-target="#edit" onclick="location.href = 'customer-edit?cId=${c.getcId()}'"><span
                                                                 class="glyphicon glyphicon-pencil"></span></button></p>
                                                 </td>
                                                 <td>
@@ -99,41 +100,36 @@
 
                                 </table>
 
-                                
+
 
                             </div>
-                                <div id="paggerClick" class="paging"> </div>    
+                            <div id="paggerClick" class="paging"> </div>    
                         </div>
                     </div>
                 </div>
 
 
-        
 
 
 
-                
+
+
             </div>
-                <jsp:include page="../common/footer.jsp"></jsp:include>
-        </div>
-        <script>
-            paggerClick('paggerClick',${pageindex},${totalpage}, 'customer-list?', 2)
-            function deleteCustomer(id)
-            {
-                var result = confirm("Are you sure?");
-                if(result)
+            <jsp:include page="../common/footer.jsp"></jsp:include>
+            </div>
+            <script>
+                
+                
+                paggerClick('paggerClick',${pageindex},${totalpage}, 'customer-list?', 2,'A')
+                function deleteCustomer(id)
                 {
-                    window.location.href = "customer-delete?cId=" + id;
+                    var result = confirm("Are you sure?");
+                    if (result)
+                    {
+                        window.location.href = "customer-delete?cId=" + id;
+                    }
                 }
-            }
-            $(document).ready(function () {
-                    $("#myInput").on("keyup", function () {
-                        var value = $(this).val().toLowerCase();
-                        $("#myTable tr").filter(function () {
-                            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                        });
-                    });
-                });
+
         </script>
     </body>
 

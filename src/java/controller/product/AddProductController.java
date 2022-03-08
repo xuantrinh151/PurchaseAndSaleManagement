@@ -36,7 +36,7 @@ public class AddProductController extends BaseAuthorizationController {
             request.setAttribute("message", message);
             request.setAttribute("alert", alert);
         }
-            request.getRequestDispatcher("/view/product/insert.jsp").forward(request, response);
+        request.getRequestDispatcher("/view/product/insert.jsp").forward(request, response);
     }
 
     @Override
@@ -48,12 +48,14 @@ public class AddProductController extends BaseAuthorizationController {
         String pType = request.getParameter("product_categorie");
         Part file = request.getPart("image");
         String imageFileName = file.getSubmittedFileName();
-        String uploadPath = "C:/Users/xuant/OneDrive/Desktop/PurchaseAndSaleManagement/web/assets/img/" + imageFileName;
-        try (FileOutputStream fos = new FileOutputStream(uploadPath)) {
-            InputStream is = file.getInputStream();
-            byte[] data = new byte[is.available()];
-            is.read(data);
-            fos.write(data);
+        if (imageFileName != "") {
+            String uploadPath = "C:/Users/xuant/OneDrive/Desktop/PurchaseAndSaleManagement/web/assets/img/" + imageFileName;
+            try (FileOutputStream fos = new FileOutputStream(uploadPath)) {
+                InputStream is = file.getInputStream();
+                byte[] data = new byte[is.available()];
+                is.read(data);
+                fos.write(data);
+            }
         }
 
         Product p = new Product();
@@ -69,8 +71,6 @@ public class AddProductController extends BaseAuthorizationController {
         } else {
             response.sendRedirect("product-add?message=Create Failure&alert=danger");
         }
-        
-        
 
     }
 

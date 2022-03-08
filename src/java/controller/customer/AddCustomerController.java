@@ -27,9 +27,6 @@ import model.Role;
 @MultipartConfig
 public class AddCustomerController extends BaseAuthorizationController {
 
-    
-    
-
     @Override
     protected void processGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -43,7 +40,6 @@ public class AddCustomerController extends BaseAuthorizationController {
         request.getRequestDispatcher("/view/customer/insert.jsp").forward(request, response);
     }
 
-    
     @Override
     protected void processPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -55,19 +51,21 @@ public class AddCustomerController extends BaseAuthorizationController {
         int roleId = Integer.parseInt(request.getParameter("customer_role"));
         Part file = request.getPart("image");
         String imageFileName = file.getSubmittedFileName();
-        String uploadPath = "C:/Users/xuant/OneDrive/Desktop/PurchaseAndSaleManagement/web/assets/img/" + imageFileName;
-        try (FileOutputStream fos = new FileOutputStream(uploadPath)) {
-            InputStream is = file.getInputStream();
-            byte[] data = new byte[is.available()];
-            is.read(data);
-            fos.write(data);
+        if (imageFileName != "") {
+            String uploadPath = "C:/Users/xuant/OneDrive/Desktop/PurchaseAndSaleManagement/web/assets/img/" + imageFileName;
+            try (FileOutputStream fos = new FileOutputStream(uploadPath)) {
+                InputStream is = file.getInputStream();
+                byte[] data = new byte[is.available()];
+                is.read(data);
+                fos.write(data);
+            }
         }
-        
+
         Customer customer = new Customer();
         customer.setcName(cName);
         customer.setcSdt(cPhone);
         customer.setcAddress(cAddress);
-        Role r =new Role();
+        Role r = new Role();
         r.setrId(roleId);
         customer.setRole(r);
         customer.setcImage(imageFileName);
@@ -77,9 +75,7 @@ public class AddCustomerController extends BaseAuthorizationController {
         } else {
             response.sendRedirect("customer-add?message=Create Failure&alert=danger");
         }
-        
-    }
 
-    
+    }
 
 }

@@ -119,7 +119,11 @@ public class CustomerDBContext extends DBContext {
             stm.setInt(2, c.getcSdt());
             stm.setString(3, c.getcAddress());
             stm.setInt(4, c.getRole().getrId());
-            stm.setString(5, c.getcImage());
+            if (c.getcImage() == "") {
+                stm.setString(5, null);
+            } else {
+                stm.setString(5, c.getcImage());
+            }
 
             stm.executeUpdate();
             rs = stm.getGeneratedKeys();
@@ -189,7 +193,7 @@ public class CustomerDBContext extends DBContext {
             stm.setString(3, c.getcAddress());
             stm.setInt(4, c.getRole().getrId());
             stm.setString(5, c.getcImage());
-            stm.setInt(6,c.getcId());
+            stm.setInt(6, c.getcId());
             stm.executeUpdate();
 
         } catch (SQLException ex) {
@@ -221,7 +225,7 @@ public class CustomerDBContext extends DBContext {
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, cId);
             ResultSet rs = stm.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 Customer c = new Customer();
                 c.setcId(rs.getInt("MaKH"));
                 c.setcName(rs.getString("HoTen"));
@@ -232,25 +236,40 @@ public class CustomerDBContext extends DBContext {
                 r.setrId(rs.getInt("RoleID"));
                 c.setRole(r);
                 return c;
-                
+
             }
         } catch (SQLException ex) {
             Logger.getLogger(CustomerDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
-    public ArrayList<Customer> getCustomers(int pageindex, int pagesize) {
+
+    public ArrayList<Customer> getCustomers(int pageindex, int pagesize, String keyWord) {
         ArrayList<Customer> customers = new ArrayList<>();
         try {
             String sql = "SELECT k.MaKH,k.HoTen,k.SDT,k.DiaChi,k.RoleID , k.Anh,k.Name as rName FROM \n"
                     + "            (SELECT *,ROW_NUMBER() OVER (ORDER BY kh.MaKH ASC) as row_index FROM KhachHang kh"
-                    + "            inner join Role r on r.ID = kh.RoleID) k\n"
-                    + "            WHERE row_index >= (? -1)* ? +1 AND row_index <= ? * ?";
+                    + "            inner join Role r on r.ID = kh.RoleID  \n";
+            if (keyWord != null) {
+                sql += " WHERE HoTen like ? ";
+            }
+            sql += ") k";
+            sql += " WHERE row_index >= (? -1)* ? +1 AND row_index <= ? * ?";
             PreparedStatement stm = connection.prepareStatement(sql);
-            stm.setInt(1, pageindex);
-            stm.setInt(2, pagesize);
-            stm.setInt(3, pageindex);
-            stm.setInt(4, pagesize);
+
+            if (keyWord != null) {
+                stm.setString(1, "%" + keyWord + "%");
+                stm.setInt(2, pageindex);
+                stm.setInt(3, pagesize);
+                stm.setInt(4, pageindex);
+                stm.setInt(5, pagesize);
+            }else{
+                stm.setInt(1, pageindex);
+                stm.setInt(2, pagesize);
+                stm.setInt(3, pageindex);
+                stm.setInt(4, pagesize);
+            }
+
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
                 Customer c = new Customer();
@@ -271,10 +290,16 @@ public class CustomerDBContext extends DBContext {
         return customers;
     }
 
-    public int count() {
+    public int count(String keyWord) {
         try {
-            String sql = "SELECT count(*) as Total FROM KhachHang";
+            String sql = "SELECT count(*) as Total FROM KhachHang ";
+            if (keyWord != null) {
+                sql += " WHERE HoTen like ?";
+            }
             PreparedStatement stm = connection.prepareStatement(sql);
+            if (keyWord != null) {
+                stm.setString(1, "%" + keyWord + "%");
+            }
             ResultSet rs = stm.executeQuery();
             if (rs.next()) {
                 return rs.getInt("Total");
@@ -284,5 +309,15 @@ public class CustomerDBContext extends DBContext {
         }
         return -1;
     }
-    
+
+    public static void main(String[] args) {
+        CustomerDBContext db = new CustomerDBContext();
+        int count = db.count(null);
+        System.out.println(count);
+
+        ArrayList<Customer> customers = db.getCustomers(1, 6, null);
+        for (Customer customer : customers) {
+            System.out.println(customer.getcName());
+        }
+    }
 }

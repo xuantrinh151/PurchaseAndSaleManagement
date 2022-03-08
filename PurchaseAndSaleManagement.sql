@@ -228,8 +228,8 @@ where u.TaiKhoan = 'phuongvien' and u.MatKhau = '123'
 select * from SanPham 
 SELECT s.MaSP,s.TenSP,s.Gia,s.Anh,s.Loai FROM 
             (SELECT *,ROW_NUMBER() OVER (ORDER BY sp.MaSP ASC) as row_index FROM SanPham sp) s
-            WHERE row_index >= (4 -1)* 6 +1 AND row_index <= 4 * 6
-
+            WHERE  row_index >= (4 -1)* 6 +1 AND row_index <= 4 * 6 and TenSP like N'%Lữ%' 
+SELECT count(*) as Total FROM SanPham where  TenSP like  N'%Lữ%' 
 
 with t as (
 	SELECT h.MaHD,k.HoTen,u.HoTen as NguoiLap, h.Ngay  FROM 

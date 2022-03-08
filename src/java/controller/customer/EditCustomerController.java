@@ -27,10 +27,6 @@ import model.Role;
 @MultipartConfig
 public class EditCustomerController extends BaseAuthorizationController {
 
-    
-   
-
-    
     @Override
     protected void processGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -39,7 +35,7 @@ public class EditCustomerController extends BaseAuthorizationController {
         CustomerDBContext cdbc = new CustomerDBContext();
         Customer customer = cdbc.getCustomer(cId);
         request.setAttribute("customer", customer);
-         String message = request.getParameter("message");
+        String message = request.getParameter("message");
         String alert = request.getParameter("alert");
         if (message != null && alert != null) {
             request.setAttribute("message", message);
@@ -48,29 +44,30 @@ public class EditCustomerController extends BaseAuthorizationController {
         request.getRequestDispatcher("/view/customer/edit.jsp").forward(request, response);
     }
 
-    
     @Override
     protected void processPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-         request.setCharacterEncoding("UTF-8");
+        request.setCharacterEncoding("UTF-8");
         CustomerDBContext cdbc = new CustomerDBContext();
         String cId = (request.getParameter("customer_id"));
-     
+
         String cName = request.getParameter("customer_name");
         int cPhone = Integer.parseInt(request.getParameter("customer_phone"));
         String cAddress = request.getParameter("customer_address");
         int roleId = Integer.parseInt(request.getParameter("customer_role"));
         Part file = request.getPart("image");
         String imageFileName = file.getSubmittedFileName();
-        String uploadPath = "C:/Users/xuant/OneDrive/Desktop/PurchaseAndSaleManagement/web/assets/img/" + imageFileName;
-        try (FileOutputStream fos = new FileOutputStream(uploadPath)) {
-            InputStream is = file.getInputStream();
-            byte[] data = new byte[is.available()];
-            is.read(data);
-            fos.write(data);
+        if (imageFileName != "") {
+            String uploadPath = "C:/Users/xuant/OneDrive/Desktop/PurchaseAndSaleManagement/web/assets/img/" + imageFileName;
+            try (FileOutputStream fos = new FileOutputStream(uploadPath)) {
+                InputStream is = file.getInputStream();
+                byte[] data = new byte[is.available()];
+                is.read(data);
+                fos.write(data);
+            }
         }
 
-        Customer customer = new Customer();
+        Customer customer = cdbc.getCustomer(Integer.parseInt(cId));
         customer.setcId(Integer.parseInt(cId));
         customer.setcName(cName);
         customer.setcSdt(cPhone);
@@ -78,10 +75,12 @@ public class EditCustomerController extends BaseAuthorizationController {
         Role r = new Role();
         r.setrId(roleId);
         customer.setRole(r);
-        customer.setcImage(imageFileName);
+        if(imageFileName != ""){
+            customer.setcImage(imageFileName);
+        }
+        
         cdbc.editCustomer(customer);
         response.sendRedirect("customer-list");
     }
 
-    
 }

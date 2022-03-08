@@ -158,7 +158,12 @@ public class ProductDBContext extends DBContext {
             stm = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             stm.setString(1, p.getpName());
             stm.setInt(2, p.getpPrice());
-            stm.setString(3, p.getpImage());
+            if (p.getpImage() == "") {
+                stm.setString(3, null);
+            } else {
+                stm.setString(3, p.getpImage());
+            }
+
             stm.setString(4, p.getpType());
             stm.executeUpdate();
             rs = stm.getGeneratedKeys();
@@ -193,7 +198,7 @@ public class ProductDBContext extends DBContext {
         String sql = "UPDATE [dbo].[SanPham]\n"
                 + "SET [TenSP] = ?,[Gia] = ?,[Anh] = ?,[Loai] = ?\n"
                 + "WHERE [MaSP] = ?";
-        
+
         try {
 
             stm = connection.prepareStatement(sql);
@@ -203,7 +208,7 @@ public class ProductDBContext extends DBContext {
             stm.setString(4, p.getpType());
             stm.setInt(5, p.getpId());
             stm.executeUpdate();
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(ProductDBContext.class.getName()).log(Level.SEVERE, null, ex);
         } finally {

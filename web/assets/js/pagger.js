@@ -21,19 +21,29 @@ function pagger(id, pageindex, totalpage, url)
         }
     });
 }
-function paggerClick(id, pageindex, totalpage, url, gap) {
+function paggerClick(id, pageindex, totalpage, url, gap, keyWord) {
     container = document.getElementById(id);
     var result = '';
 
     if (pageindex - gap > 1) {
 
-        result += '<a href="' + url + 'page=1" >Fisrt</a>'
+        result += '<a href="' + url + 'page=1'
 
+        result += '&keyWord=A"'
+
+
+        result += '>Fisrt</a>'
     }
     for (var i = pageindex - gap; i < pageindex; i++) {
         if (i >= 1) {
 
-            result += '<a href="' + url + 'page=' + i + '" >' + i + '</a>'
+            result += '<a href="' + url + 'page=' + i + ''
+            if (keyWord != null) {
+
+                result += '&keyWord=' + keyWord + ''
+            }
+
+            result += '">' + i + '</a>'
         }
 
     }
@@ -43,14 +53,19 @@ function paggerClick(id, pageindex, totalpage, url, gap) {
 
         if (i <= totalpage) {
 
-            result += '<a href="' + url + 'page=' + i + '" >' + i + '</a>'
+            result += '<a href="' + url + 'page=' + i + ''
+            if (keyWord != null) {
+
+                result += '&keyWord=' + keyWord + ''
+            }
+            result += '">' + i + '</a>'
         }
 
     }
 
     if (pageindex + gap < totalpage) {
 
-        result += '<a href="' + url + 'page=' + totalpage + '" >Last</a>'
+        result += '<a href="' + url + 'page=' + totalpage + '&keyWord=A" >Last</a>'
 
     }
 
