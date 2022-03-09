@@ -51,10 +51,15 @@
                                     <div class="form-group row">
                                         <div class="inputSearch col-xs-3">
                                             <label for="ex1">Search:</label>
-                                            
-                                            <input class="form-control" id="myInput" type="text" >
-                                        </div>
 
+                                            <input  class="form-control" id="myInput" type="text" name="keyWord" value="${keyWord}">
+                                        </div>
+                                        <input style="margin-top: 1px;
+                                               padding: 4px;
+                                               color: white;
+                                               background-color: rgb(48 113 169);
+                                               border-color: rgb(40 94 142);
+                                               " type="submit" value="Search"/>
                                     </div>
                                 </form>
 
@@ -104,10 +109,42 @@
                                 </table>
 
                                 <div class="clearfix"></div>
+                                <ul  class="pagination pull-right">
+                                    <c:if test="${pageindex - 2 > 1}">
+                                        <li><a href="product-list?page=1&keyWord=${keyWord}">First</a></li>          
+                                        </c:if>
 
+
+                                    <c:if test="${pageindex - 2 >= 0}">
+                                        <c:forEach begin="${pageindex - 2}" end="${pageindex - 1}" var="i">
+                                            <c:if test="${i >= 1}"> 
+                                                <li><a href="product-list?page=${i}&keyWord=${keyWord}">${i}</a></li>
+                                                </c:if>
+
+                                        </c:forEach>
+                                    </c:if>
+
+                                    <li><span 
+                                            style="background-color: rgb(48 113 169);color: white;"
+                                            href="product-list?page=${pageindex}&keyWord=${keyWord}">${pageindex}</span></li>
+
+
+                                    <c:forEach begin="${pageindex +1}" end="${pageindex + 2}" var="i">
+                                        <c:if test="${i <= totalpage}">
+                                            <li><a href="product-list?page=${i}&keyWord=${keyWord}">${i}</a></li>
+                                            </c:if>
+                                        </c:forEach>
+
+
+
+                                    <c:if test="${pageindex + 2 < totalpage}">
+                                        <li><a href="product-list?page=${totalpage}&keyWord=${keyWord}">Last</a></li> 
+                                        </c:if>
+
+                                </ul>
 
                             </div>
-                            <div id="paggerClick" class="paging"> </div>    
+
                         </div>
                     </div>
                 </div>
@@ -120,25 +157,18 @@
 
             </div>
             <jsp:include page="../common/footer.jsp"></jsp:include>
-            </div>
-            <script>
-                paggerClick('paggerClick',${pageindex},${totalpage}, 'product-list?', 2)
-                function deleteProduct(id)
+        </div>
+        <script>
+
+            function deleteProduct(id)
+            {
+                var result = confirm("Are you sure?");
+                if (result)
                 {
-                    var result = confirm("Are you sure?");
-                    if (result)
-                    {
-                        window.location.href = "product-delete?pId=" + id;
-                    }
+                    window.location.href = "product-delete?pId=" + id;
                 }
-                $(document).ready(function () {
-                    $("#myInput").on("keyup", function () {
-                        var value = $(this).val().toLowerCase();
-                        $("#myTable tr").filter(function () {
-                            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                        });
-                    });
-                });
+            }
+
         </script>
     </body>
 

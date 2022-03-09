@@ -39,7 +39,7 @@ public class CustomerListController extends BaseAuthorizationController {
         int pageindex = Integer.parseInt(page);
         ArrayList<Customer> customers = cdbc.getCustomers(pageindex,pagesize,keyWord);
         request.setAttribute("customers", customers);
-        
+        request.setAttribute("keyWord", keyWord);
         int numofrecords = cdbc.count(keyWord);
         int totalpage = (numofrecords % pagesize ==0)?(numofrecords/pagesize)
                 :(numofrecords/pagesize) + 1;
@@ -53,7 +53,26 @@ public class CustomerListController extends BaseAuthorizationController {
     @Override
     protected void processPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+        request.setCharacterEncoding("UTF-8");
+        String keyWord = request.getParameter("keyWord");
+        CustomerDBContext cdbc = new CustomerDBContext();
+        String page = request.getParameter("page");
+        if(page ==null || page.trim().length() ==0)
+        {
+            page = "1";
+        }
+        int pagesize = 6;
+        int pageindex = Integer.parseInt(page);
+        ArrayList<Customer> customers = cdbc.getCustomers(pageindex,pagesize,keyWord);
+        request.setAttribute("customers", customers);
+        request.setAttribute("keyWord", keyWord);
+        int numofrecords = cdbc.count(keyWord);
+        int totalpage = (numofrecords % pagesize ==0)?(numofrecords/pagesize)
+                :(numofrecords/pagesize) + 1;
+        request.setAttribute("totalpage", totalpage);
+        request.setAttribute("pa1gesize", pagesize);
+        request.setAttribute("pageindex", pageindex);
+        request.getRequestDispatcher("/view/customer/customerList.jsp").forward(request, response);
        
     }
 

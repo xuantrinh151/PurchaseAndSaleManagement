@@ -310,14 +310,5 @@ public class CustomerDBContext extends DBContext {
         return -1;
     }
 
-    public static void main(String[] args) {
-        CustomerDBContext db = new CustomerDBContext();
-        int count = db.count(null);
-        System.out.println(count);
-
-        ArrayList<Customer> customers = db.getCustomers(1, 6, null);
-        for (Customer customer : customers) {
-            System.out.println(customer.getcName());
-        }
-    }
+    
 }

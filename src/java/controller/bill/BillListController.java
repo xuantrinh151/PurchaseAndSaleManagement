@@ -29,6 +29,8 @@ public class BillListController extends BaseAuthorizationController {
     @Override
     protected void processGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
+        String keyWord = request.getParameter("keyWord");
         int kRole = Integer.parseInt(request.getParameter("kRole"));
         request.setAttribute("kRole", kRole);
         BillDBContext bdbc = new BillDBContext();
@@ -39,14 +41,15 @@ public class BillListController extends BaseAuthorizationController {
         }
         int pagesize = 6;
         int pageindex = Integer.parseInt(page);
-        ArrayList<Bill> bills = bdbc.getBills(pageindex, pagesize, kRole);
+        ArrayList<Bill> bills = bdbc.getBills(pageindex, pagesize, kRole,keyWord);
         request.setAttribute("bills", bills);
-        int numofrecords = bdbc.count(kRole);
+        int numofrecords = bdbc.count(kRole,keyWord);
         int totalpage = (numofrecords % pagesize ==0)?(numofrecords/pagesize)
                 :(numofrecords/pagesize) + 1;
         request.setAttribute("totalpage", totalpage);
         request.setAttribute("pa1gesize", pagesize);
         request.setAttribute("pageindex", pageindex);
+         request.setAttribute("keyWord", keyWord);
         request.getRequestDispatcher("/view/bill/billList.jsp").forward(request, response);
     }
 
@@ -54,6 +57,29 @@ public class BillListController extends BaseAuthorizationController {
     @Override
     protected void processPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
+        String keyWord = request.getParameter("keyWord");
+        int kRole = Integer.parseInt(request.getParameter("kRole"));
+        request.setAttribute("kRole", kRole);
+        BillDBContext bdbc = new BillDBContext();
+        String page = request.getParameter("page");
+        if(page ==null || page.trim().length() ==0)
+        {
+            page = "1";
+        }
+        int pagesize = 6;
+        int pageindex = Integer.parseInt(page);
+        ArrayList<Bill> bills = bdbc.getBills(pageindex, pagesize, kRole,keyWord);
+        request.setAttribute("bills", bills);
+         request.setAttribute("keyWord", keyWord);
+        int numofrecords = bdbc.count(kRole,keyWord);
+        int totalpage = (numofrecords % pagesize ==0)?(numofrecords/pagesize)
+                :(numofrecords/pagesize) + 1;
+        request.setAttribute("totalpage", totalpage);
+        request.setAttribute("pa1gesize", pagesize);
+        request.setAttribute("pageindex", pageindex);
+        
+        request.getRequestDispatcher("/view/bill/billList.jsp").forward(request, response);
     }
 
     

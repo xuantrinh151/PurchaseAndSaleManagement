@@ -44,33 +44,39 @@
                                     <h4>List of customers</h4>
                                     <button type="button" onclick="location.href = 'customer-add'" class="btn btn-primary btn-add">Add Customer</button>
                                 </div>
-                                <form action="customer-list" method="GET">
+                                <form action="customer-list" method="POST">
                                     <div class="form-group row">
                                         <div class="inputSearch col-xs-3">
                                             <label for="ex1">Search:</label>
-                                            <input oninput="search(this)" class="form-control" id="myInput" type="text" name="keyword">
-                                            <input type="submit" value="Search"/>
-                                        </div>
+                                            <input  class="form-control" id="myInput" type="text" name="keyWord" value="${keyWord}">
 
                                     </div>
-                                </form>
+                                    <input style="margin-top: 1px;
+                                           
+                                           padding: 4px;
+                                           color: white;
+                                           background-color: rgb(48 113 169);
+                                           border-color: rgb(40 94 142);
+                                           " type="submit" value="Search"/>
+                                </div>
+                            </form>
 
-                                <div class="table-responsive">
+                            <div class="table-responsive">
 
 
-                                    <table id="mytable" class="table table-bordred table-striped">
+                                <table id="mytable" class="table table-bordred table-striped">
 
-                                        <thead>
-                                        <th>Mã Khách Hàng</th>
-                                        <th>Tên Khách Hàng</th>
-                                        <th>SDT</th>
-                                        <th>Địa Chỉ</th>
-                                        <th>Role</th>
-                                        <th>Edit</th>
+                                    <thead>
+                                    <th>Mã Khách Hàng</th>
+                                    <th>Tên Khách Hàng</th>
+                                    <th>SDT</th>
+                                    <th>Địa Chỉ</th>
+                                    <th>Role</th>
+                                    <th>Edit</th>
 
-                                        <th>Delete</th>
-                                        </thead>
-                                        <tbody id="myTable">
+                                    <th>Delete</th>
+                                    </thead>
+                                    <tbody id="myTable">
 
                                         <c:forEach items="${customers}" var="c">
                                             <tr>
@@ -100,10 +106,43 @@
 
                                 </table>
 
+                                <ul  class="pagination pull-right">
+                                    <c:if test="${pageindex - 2 > 1}">
+                                        <li><a href="customer-list?page=1&keyWord=${keyWord}">First</a></li>          
+                                        </c:if>
 
+
+                                    <c:if test="${pageindex - 2 >= 0}">
+                                        <c:forEach begin="${pageindex - 2}" end="${pageindex - 1}" var="i">
+                                            <c:if test="${i >= 1}"> 
+                                                <li><a href="customer-list?page=${i}&keyWord=${keyWord}">${i}</a></li>
+                                                </c:if>
+
+                                        </c:forEach>
+                                    </c:if>
+
+                                    <li><span 
+                                            style="background-color: rgb(48 113 169);color: white;"
+                                            href="customer-list?page=${pageindex}&keyWord=${keyWord}">${pageindex}</span></li>
+
+
+                                    <c:forEach begin="${pageindex +1}" end="${pageindex + 2}" var="i">
+                                        <c:if test="${i <= totalpage}">
+                                            <li><a href="customer-list?page=${i}&keyWord=${keyWord}">${i}</a></li>
+                                            </c:if>
+                                        </c:forEach>
+
+
+
+                                    <c:if test="${pageindex + 2 < totalpage}">
+                                        <li><a href="customer-list?page=${totalpage}&keyWord=${keyWord}">Last</a></li> 
+                                        </c:if>
+
+                                </ul>
 
                             </div>
-                            <div id="paggerClick" class="paging"> </div>    
+                           
+
                         </div>
                     </div>
                 </div>
@@ -116,19 +155,19 @@
 
             </div>
             <jsp:include page="../common/footer.jsp"></jsp:include>
-            </div>
-            <script>
-                
-                
-                paggerClick('paggerClick',${pageindex},${totalpage}, 'customer-list?', 2,'A')
-                function deleteCustomer(id)
+        </div>
+        <script>
+
+
+
+            function deleteCustomer(id)
+            {
+                var result = confirm("Are you sure?");
+                if (result)
                 {
-                    var result = confirm("Are you sure?");
-                    if (result)
-                    {
-                        window.location.href = "customer-delete?cId=" + id;
-                    }
+                    window.location.href = "customer-delete?cId=" + id;
                 }
+            }
 
         </script>
     </body>

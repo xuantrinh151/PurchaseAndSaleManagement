@@ -227,8 +227,8 @@ where u.TaiKhoan = 'phuongvien' and u.MatKhau = '123'
 
 select * from SanPham 
 SELECT s.MaSP,s.TenSP,s.Gia,s.Anh,s.Loai FROM 
-            (SELECT *,ROW_NUMBER() OVER (ORDER BY sp.MaSP ASC) as row_index FROM SanPham sp) s
-            WHERE  row_index >= (4 -1)* 6 +1 AND row_index <= 4 * 6 and TenSP like N'%Lữ%' 
+            (SELECT *,ROW_NUMBER() OVER (ORDER BY sp.MaSP ASC) as row_index FROM SanPham sp WHERE  TenSP like N'%Lữ%') s
+             WHERE row_index >= (1-1)* 6 +1 AND row_index <= 1 * 6
 SELECT count(*) as Total FROM SanPham where  TenSP like  N'%Lữ%' 
 
 with t as (
@@ -241,8 +241,9 @@ SELECT s.MaHD,s.HoTen,s.NguoiLap,s.Ngay FROM
 (SELECT *,ROW_NUMBER() OVER (ORDER BY MaHD ASC) as row_index FROM t ) s
 WHERE row_index >= (1-1)* 6 +1 AND row_index <= 1 * 6
 
-SELECT count(*) as Total FROM HoaDon h inner join KhachHang k on h.MaKH = k.MaKH 
-where k.RoleID = 4
+SELECT count(*) as Total FROM HoaDon h inner join KhachHang k on h.MaKH = k.MaKH inner join [User] u on h.NguoiLap = u.ID
+where k.RoleID = 4 and (k.HoTen like N'%Viên%' or  u.Hoten like N'%Viên%' or h.Ngay like N'%Viên%')
+
 
 
 		   INSERT INTO HoaDon ( MaKH, NguoiLap, Ngay) 
@@ -265,5 +266,5 @@ where k.RoleID = 4
 
 		   SELECT k.MaKH,k.HoTen,k.SDT,k.DiaChi,k.RoleID , k.Anh ,k.Name as rName FROM 
                    (SELECT *,ROW_NUMBER() OVER (ORDER BY kh.MaKH ASC) as row_index FROM KhachHang kh
-				   inner join Role r on r.ID = kh.RoleID) k
-                   WHERE row_index >= (1 -1)* 6 +1 AND row_index <= 1 * 6
+				   inner join Role r on r.ID = kh.RoleID WHERE HoTen like '%A%') k
+                   WHERE  row_index >= (1 -1)* 6 +1 AND row_index <= 1 * 6

@@ -145,7 +145,7 @@ public class BillDBContext extends DBContext {
                 Role r = new Role();
                 r.setrId(rs.getInt("RoleID"));
                 c.setRole(r);
-                
+
                 b.setCustomer(c);
                 User u = new User();
                 u.setuName(rs.getString("NguoiLap"));
@@ -180,24 +180,41 @@ public class BillDBContext extends DBContext {
         return 0;
     }
 
-    public ArrayList<Bill> getBills(int pageindex, int pagesize, int kRole) {
+    public ArrayList<Bill> getBills(int pageindex, int pagesize, int kRole, String keyWord) {
         ArrayList<Bill> bills = new ArrayList<>();
         try {
             String sql = "with t as (\n"
-                    + "	SELECT h.MaHD,k.HoTen,u.HoTen as NguoiLap, h.Ngay  FROM \n"
+                    + "	SELECT h.MaHD,k.HoTen,u.Hoten as NguoiLap, h.Ngay  FROM \n"
                     + "                HoaDon h inner join KhachHang k on h.MaKH = k.MaKH \n"
                     + "                inner join [User] u on h.NguoiLap = u.ID\n"
                     + "                where k.RoleID = ?\n"
                     + ")\n"
                     + "SELECT s.MaHD,s.HoTen,s.NguoiLap,s.Ngay FROM \n"
-                    + "(SELECT *,ROW_NUMBER() OVER (ORDER BY MaHD ASC) as row_index FROM t ) s\n"
-                    + "WHERE row_index >= (? -1)* ? +1 AND row_index <= ? * ?";
+                    + "(SELECT *,ROW_NUMBER() OVER (ORDER BY MaHD ASC) as row_index FROM t \n";
+
+            if (keyWord != null) {
+                sql += " WHERE HoTen like ? or  NguoiLap like ? or Ngay like ?";
+            }
+            sql += ") s";
+            sql += " WHERE row_index >= (? -1)* ? +1 AND row_index <= ? * ?";
             PreparedStatement stm = connection.prepareStatement(sql);
+
             stm.setInt(1, kRole);
-            stm.setInt(2, pageindex);
-            stm.setInt(3, pagesize);
-            stm.setInt(4, pageindex);
-            stm.setInt(5, pagesize);
+            if (keyWord != null) {
+                stm.setString(2, "%" + keyWord + "%");
+                stm.setString(3, "%" + keyWord + "%");
+                stm.setString(4, "%" + keyWord + "%");
+                stm.setInt(5, pageindex);
+                stm.setInt(6, pagesize);
+                stm.setInt(7, pageindex);
+                stm.setInt(8, pagesize);
+            } else {
+                stm.setInt(2, pageindex);
+                stm.setInt(3, pagesize);
+                stm.setInt(4, pageindex);
+                stm.setInt(5, pagesize);
+            }
+
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
                 Bill b = new Bill();
@@ -217,12 +234,20 @@ public class BillDBContext extends DBContext {
         return bills;
     }
 
-    public int count(int kRole) {
+    public int count(int kRole, String keyWord) {
         try {
-            String sql = "SELECT count(*) as Total FROM HoaDon h inner join KhachHang k on h.MaKH = k.MaKH \n"
+            String sql = "SELECT count(*) as Total FROM HoaDon h inner join KhachHang k on h.MaKH = k.MaKH inner join [User] u on h.NguoiLap = u.ID\n"
                     + "where k.RoleID = ?";
+            if (keyWord != null) {
+                sql += " and (k.HoTen like ? or  u.Hoten like ? or h.Ngay like ?)";
+            }
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, kRole);
+            if (keyWord != null) {
+                stm.setString(2, "%" + keyWord + "%");
+                stm.setString(3, "%" + keyWord + "%");
+                stm.setString(4, "%" + keyWord + "%");
+            }
             ResultSet rs = stm.executeQuery();
             if (rs.next()) {
                 return rs.getInt("Total");
@@ -232,6 +257,8 @@ public class BillDBContext extends DBContext {
         }
         return -1;
     }
+
+    
 
     public int addBill(Bill b) {
         PreparedStatement stm = null;
@@ -458,11 +485,11 @@ public class BillDBContext extends DBContext {
             stm_deleteBillDetail = connection.prepareStatement(sql_deleteBillDetail);
             stm_deleteBillDetail.setInt(1, bId);
             stm_deleteBillDetail.executeUpdate();
-            
+
             stm_deleteBill = connection.prepareStatement(sql_deleteBill);
             stm_deleteBill.setInt(1, bId);
             stm_deleteBill.executeUpdate();
-            
+
             connection.commit();
         } catch (SQLException ex) {
             Logger.getLogger(BillDBContext.class.getName()).log(Level.SEVERE, null, ex);
@@ -505,5 +532,4 @@ public class BillDBContext extends DBContext {
 
     }
 
-    
 }

@@ -105,17 +105,32 @@ public class ProductDBContext extends DBContext {
         return null;
     }
 
-    public ArrayList<Product> getProducts(int pageindex, int pagesize) {
+    public ArrayList<Product> getProducts(int pageindex, int pagesize, String keyWord) {
         ArrayList<Product> products = new ArrayList<>();
         try {
             String sql = "SELECT s.MaSP,s.TenSP,s.Gia,s.Anh,s.Loai FROM \n"
-                    + "            (SELECT *,ROW_NUMBER() OVER (ORDER BY sp.MaSP ASC) as row_index FROM SanPham sp) s\n"
-                    + "            WHERE row_index >= (? -1)* ? +1 AND row_index <= ? * ?";
+                    + "            (SELECT *,ROW_NUMBER() OVER (ORDER BY sp.MaSP ASC) as row_index FROM SanPham sp \n";
+                   
+            if (keyWord != null) {
+                sql += " WHERE TenSP like ? or Gia like ?";
+            }
+            sql += ") s";
+            sql +=" WHERE row_index >= (? -1)* ? +1 AND row_index <= ? * ?";
             PreparedStatement stm = connection.prepareStatement(sql);
-            stm.setInt(1, pageindex);
-            stm.setInt(2, pagesize);
-            stm.setInt(3, pageindex);
-            stm.setInt(4, pagesize);
+            if (keyWord != null) {
+                stm.setString(1, "%" + keyWord + "%");
+                stm.setString(2, "%" + keyWord + "%");
+                stm.setInt(3, pageindex);
+                stm.setInt(4, pagesize);
+                stm.setInt(5, pageindex);
+                stm.setInt(6, pagesize);
+            }else{
+                stm.setInt(1, pageindex);
+                stm.setInt(2, pagesize);
+                stm.setInt(3, pageindex);
+                stm.setInt(4, pagesize);
+            }
+
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
                 Product p = new Product();
@@ -132,10 +147,17 @@ public class ProductDBContext extends DBContext {
         return products;
     }
 
-    public int count() {
+    public int count(String keyWord) {
         try {
             String sql = "SELECT count(*) as Total FROM SanPham";
+            if (keyWord != null) {
+                sql += " WHERE TenSP like ? or Gia like ?";
+            }
             PreparedStatement stm = connection.prepareStatement(sql);
+            if (keyWord != null) {
+                stm.setString(1, "%" + keyWord + "%");
+                stm.setString(2, "%" + keyWord + "%");
+            }
             ResultSet rs = stm.executeQuery();
             if (rs.next()) {
                 return rs.getInt("Total");
