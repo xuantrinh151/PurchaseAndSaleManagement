@@ -36,19 +36,19 @@
                             <div class="hello-admin">
                                 <p>
                                     Xin Chào ${sessionScope.user.getuName()}
-                                </p>
-                                <p >
-                                    Chúc bạn một ngày tốt lành,bán được thật nhiều hàng nhé
-                                </p>
+                            </p>
+                            <p >
+                                Chúc bạn một ngày tốt lành,bán được thật nhiều hàng nhé
+                            </p>
 
+                        </div>
+                        <div class="overview-item totalSales">
+                            <div class="totalSales-img overview-item-img">
+                                <img class="img-responsive"  src="./assets/img/totalNumber.png" alt="">
                             </div>
-                            <div class="overview-item totalSales">
-                                <div class="totalSales-img overview-item-img">
-                                    <img class="img-responsive"  src="./assets/img/totalNumber.png" alt="">
-                                </div>
-                                <div class="totalSales-detail overview-item-detail">
-                                    <p class="totalSales-title" style="font-weight: 700; font-size: 18px; ">Total Sales</p>
-                                    <p class="totalSales-quantily"  style="font-size: 15px; font-weight: 600">${totalSell}VND</p>
+                            <div class="totalSales-detail overview-item-detail">
+                                <p class="totalSales-title" style="font-weight: 700; font-size: 18px; ">Total Sales</p>
+                                <p class="totalSales-quantily"  style="font-size: 15px; font-weight: 600">${totalSell}VND</p>
                             </div>
 
                         </div>
@@ -76,9 +76,78 @@
                     </div>
                     <div class="topThree">
                         <div class="topThree-item topProduct">
-                            <p class="topThree-title">Top Product</p>
+
+                            <div class="topThree-header">
+                                <p class="topThree-title">Top Product</p>
+                                <form action="home" method="GET">
+                                    <select onchange="this.form.submit()" name="timeProduct" style="width: 152px;margin-right: 24px" class="topThree-select form-control ">
+                                        <option value="year">Year</option>
+                                        <option 
+                                            <c:if test="${timeProduct == 1}">
+                                                selected="selected"
+                                            </c:if>
+                                            value="1">January</option>
+                                        <option 
+                                            <c:if test="${timeProduct == 2}">
+                                                selected="selected"
+                                            </c:if>
+                                            value="2">February</option>
+                                        <option 
+                                            <c:if test="${timeProduct == 3}">
+                                                selected="selected"
+                                            </c:if>
+                                            value="3">March</option>
+                                        <option  
+                                            <c:if test="${timeProduct == 4}">
+                                                selected="selected"
+                                            </c:if>
+                                            value="4">April</option>
+                                        <option  
+                                            <c:if test="${timeProduct == 5}">
+                                                selected="selected"
+                                            </c:if>
+                                            value="5">May</option>
+                                        <option  
+                                            <c:if test="${timeProduct == 6}">
+                                                selected="selected"
+                                            </c:if>
+                                            value="6">June</option>
+                                        <option  
+                                            <c:if test="${timeProduct == 7}">
+                                                selected="selected"
+                                            </c:if>
+                                            value="7">July</option>
+                                        <option  
+                                            <c:if test="${timeProduct == 8}">
+                                                selected="selected"
+                                            </c:if>
+                                            value="8">August</option>
+                                        <option  
+                                            <c:if test="${timeProduct == 9}">
+                                                selected="selected"
+                                            </c:if>
+                                            value="9">September</option>
+                                        <option  
+                                            <c:if test="${timeProduct == 10}">
+                                                selected="selected"
+                                            </c:if>
+                                            value="10">October</option>
+                                        <option  
+                                            <c:if test="${timeProduct == 11}">
+                                                selected="selected"
+                                            </c:if>
+                                            value="11">November</option>
+                                        <option  
+                                            <c:if test="${timeProduct == 12}">
+                                                selected="selected"
+                                            </c:if>
+                                            value="12">December</option>
+                                    </select>
+                                </form>
+
+                            </div>
                             <div class="topDetail">
-                                <c:forEach items="${a.topThreeProduct}" var="i">
+                                <c:forEach items="${products}" var="i">
                                     <div class="topDetail-item">
                                         <div class="img-topDetail" 
                                              style="background-image: url(./assets/img/${i.pImage});">
@@ -90,7 +159,74 @@
                             </div>
                         </div>
                         <div class="topThree-item topCustomer">
-                            <p class="topThree-title">Top Customer</p>
+                            <div class="topThree-header">
+                                <p class="topThree-title">Top Customer</p>
+                                <form action="home" method="GET">
+                                    <select onchange="this.form.submit()" name="timeCustomer" style="width: 152px;margin-right: 24px" class="topThree-select form-control ">
+                                        <option value="year">Year</option>
+                                        <option 
+                                            <c:if test="${timeCustomer == 1}">
+                                                selected="selected"
+                                            </c:if>
+                                            value="1">January</option>
+                                        <option 
+                                            <c:if test="${timeCustomer == 2}">
+                                                selected="selected"
+                                            </c:if>
+                                            value="2">February</option>
+                                        <option 
+                                            <c:if test="${timeCustomer == 3}">
+                                                selected="selected"
+                                            </c:if>
+                                            value="3">March</option>
+                                        <option  
+                                            <c:if test="${timeCustomer == 4}">
+                                                selected="selected"
+                                            </c:if>
+                                            value="4">April</option>
+                                        <option  
+                                            <c:if test="${timeCustomer == 5}">
+                                                selected="selected"
+                                            </c:if>
+                                            value="5">May</option>
+                                        <option  
+                                            <c:if test="${timeCustomer == 6}">
+                                                selected="selected"
+                                            </c:if>
+                                            value="6">June</option>
+                                        <option  
+                                            <c:if test="${timeCustomer == 7}">
+                                                selected="selected"
+                                            </c:if>
+                                            value="7">July</option>
+                                        <option  
+                                            <c:if test="${timeCustomer == 8}">
+                                                selected="selected"
+                                            </c:if>
+                                            value="8">August</option>
+                                        <option  
+                                            <c:if test="${timeCustomer == 9}">
+                                                selected="selected"
+                                            </c:if>
+                                            value="9">September</option>
+                                        <option  
+                                            <c:if test="${timeCustomer == 10}">
+                                                selected="selected"
+                                            </c:if>
+                                            value="10">October</option>
+                                        <option  
+                                            <c:if test="${timeCustomer == 11}">
+                                                selected="selected"
+                                            </c:if>
+                                            value="11">November</option>
+                                        <option  
+                                            <c:if test="${timeCustomer == 12}">
+                                                selected="selected"
+                                            </c:if>
+                                            value="12">December</option>
+                                    </select>
+                                </form>
+                            </div>
                             <div class="topDetail">
                                 <c:forEach items="${customers}" var="i" >
                                     <div class="topDetail-item">

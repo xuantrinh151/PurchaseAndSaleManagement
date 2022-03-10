@@ -185,9 +185,8 @@ with t as (
 	SELECT k.* ,c.* ,s.Gia,s.Gia * c.SoLuong as BillMoney from KhachHang k inner join HoaDon h on k.MaKH = h.MaKH 
 	inner join CTHD c on h.MaHD = c.MaHD
 	inner join SanPham s on c.MaSP = s.MaSP
-	where s.Loai = N'Xuất'
-)
-SELECT t.MaKH,t.HoTen,t.SDT,t.DiaChi,t.RoleID,t.Anh ,sum(t.BillMoney) as TotalMoney FROM t
+	where s.Loai = N'Xuất' and month(h.Ngay) = 3)
+SELECT top 3 t.MaKH,t.HoTen,t.SDT,t.DiaChi,t.RoleID,t.Anh ,sum(t.BillMoney) as TotalMoney FROM t
 group by t.MaKH,t.HoTen,t.SDT,t.DiaChi,t.RoleID,t.Anh 
 order by TotalMoney desc
 
@@ -268,3 +267,9 @@ where k.RoleID = 4 and (k.HoTen like N'%Viên%' or  u.Hoten like N'%Viên%' or h
                    (SELECT *,ROW_NUMBER() OVER (ORDER BY kh.MaKH ASC) as row_index FROM KhachHang kh
 				   inner join Role r on r.ID = kh.RoleID WHERE HoTen like '%A%') k
                    WHERE  row_index >= (1 -1)* 6 +1 AND row_index <= 1 * 6
+
+SELECT top 3 c.MaSP,s.TenSP,s.Gia,s.Anh,sum(SoLuong) AS Total,s.Loai
+FROM CTHD c inner join SanPham s on c.MaSP = s.MaSP  inner join HoaDon h on h.MaHD = c.MaHD
+WHERE S.Loai = N'Xuất' and  month(h.Ngay) = 3
+GROUP BY c.MaSP ,s.TenSP,s.Gia,s.Anh,s.Loai
+ORDER BY Total desc

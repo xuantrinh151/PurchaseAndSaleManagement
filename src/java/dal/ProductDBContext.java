@@ -20,15 +20,21 @@ import model.Product;
  */
 public class ProductDBContext extends DBContext {
 
-    public ArrayList<Product> getTopThreeProduct() {
+    public ArrayList<Product> getTopThreeProduct(String time) {
         ArrayList<Product> products = new ArrayList<>();
         String sql = "SELECT top 3 c.MaSP,s.TenSP,s.Gia,s.Anh,sum(SoLuong) AS Total,s.Loai\n"
-                + "FROM CTHD c inner join SanPham s on c.MaSP = s.MaSP\n"
-                + "WHERE S.Loai = N'Xuất'\n"
-                + "GROUP BY c.MaSP ,s.TenSP,s.Gia,s.Anh,s.Loai\n"
-                + "ORDER BY Total desc";
+                + "FROM CTHD c inner join SanPham s on c.MaSP = s.MaSP  inner join HoaDon h on h.MaHD = c.MaHD\n"
+                + "WHERE S.Loai = N'Xuất' \n";
+
+        if ( time != null && !time.equalsIgnoreCase("year")) {
+            sql += " and  month(h.Ngay) = ? ";
+        }
+        sql += "GROUP BY c.MaSP ,s.TenSP,s.Gia,s.Anh,s.Loai ORDER BY Total desc";
         try {
             PreparedStatement stm = connection.prepareStatement(sql);
+            if ( time != null && !time.equalsIgnoreCase("year")) {
+                stm.setString(1, time);
+            }
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
                 Product p = new Product();
@@ -110,12 +116,12 @@ public class ProductDBContext extends DBContext {
         try {
             String sql = "SELECT s.MaSP,s.TenSP,s.Gia,s.Anh,s.Loai FROM \n"
                     + "            (SELECT *,ROW_NUMBER() OVER (ORDER BY sp.MaSP ASC) as row_index FROM SanPham sp \n";
-                   
+
             if (keyWord != null) {
                 sql += " WHERE TenSP like ? or Gia like ?";
             }
             sql += ") s";
-            sql +=" WHERE row_index >= (? -1)* ? +1 AND row_index <= ? * ?";
+            sql += " WHERE row_index >= (? -1)* ? +1 AND row_index <= ? * ?";
             PreparedStatement stm = connection.prepareStatement(sql);
             if (keyWord != null) {
                 stm.setString(1, "%" + keyWord + "%");
@@ -124,7 +130,7 @@ public class ProductDBContext extends DBContext {
                 stm.setInt(4, pagesize);
                 stm.setInt(5, pageindex);
                 stm.setInt(6, pagesize);
-            }else{
+            } else {
                 stm.setInt(1, pageindex);
                 stm.setInt(2, pagesize);
                 stm.setInt(3, pageindex);

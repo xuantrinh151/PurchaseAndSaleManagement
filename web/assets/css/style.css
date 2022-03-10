@@ -96,8 +96,8 @@ html {
 .overview{   
     display: flex;
     justify-content: space-around;
-    margin-top: 15px;
-    margin-bottom: 30px;
+    margin-top: 60px;
+    
 }
 .overview-item{
 
@@ -109,6 +109,19 @@ html {
     align-items: center;
 
 
+}
+.totalSales{
+    background-color: #3399ff;
+    color: white;
+}
+.totalCost{
+    background-color: #2ec97d;
+    color: white;
+}
+.productSold{
+
+    background-color: #fca232;
+    color: white;
 }
 .overview-item-img{
     width: 60px;
@@ -132,13 +145,14 @@ html {
 .topThree{
     display: flex;
     justify-content: space-around;
-    margin-top: 15px;
+    margin-top: 50px;
 }
 .topThree-item{
     border: 1px solid #676e8a;
     width: 596px;
-    height: 300px;
+    height: 322px;
     border-radius: 10px;
+    background-color: aliceblue;
 }
 .topThree-title{
     font-size: 20px;
@@ -150,6 +164,14 @@ html {
     justify-content: space-around;
     margin-top: 30px;
 }
+.topThree-header{
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
 .img-topDetail{
     width: 150px;
     height: 150px;

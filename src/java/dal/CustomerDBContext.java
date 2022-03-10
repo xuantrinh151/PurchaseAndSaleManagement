@@ -22,19 +22,26 @@ import model.Role;
  */
 public class CustomerDBContext extends DBContext {
 
-    public ArrayList<Customer> getTopThreeCustomer() {
+    public ArrayList<Customer> getTopThreeCustomer(String time) {
         ArrayList<Customer> customers = new ArrayList<>();
         String sql = "with t as (\n"
                 + "	SELECT k.* ,c.* ,s.Gia,s.Gia * c.SoLuong as BillMoney from KhachHang k inner join HoaDon h on k.MaKH = h.MaKH \n"
                 + "	inner join CTHD c on h.MaHD = c.MaHD\n"
                 + "	inner join SanPham s on c.MaSP = s.MaSP\n"
-                + "	where s.Loai = N'Xuất'\n"
-                + ")\n"
-                + "SELECT t.MaKH,t.HoTen,t.SDT,t.DiaChi,t.RoleID,t.Anh ,sum(t.BillMoney) as TotalMoney FROM t\n"
+                + "	where s.Loai = N'Xuất' ";
+        if (time != null && !time.equalsIgnoreCase("year")) {
+            sql += " and  month(h.Ngay) = ? ";
+        }
+        sql += ")\n";
+        sql += "SELECT top 3 t.MaKH,t.HoTen,t.SDT,t.DiaChi,t.RoleID,t.Anh ,sum(t.BillMoney) as TotalMoney FROM t\n"
                 + "group by t.MaKH,t.HoTen,t.SDT,t.DiaChi,t.RoleID,t.Anh \n"
                 + "order by TotalMoney desc";
+        
         try {
             PreparedStatement stm = connection.prepareStatement(sql);
+            if (time != null && !time.equalsIgnoreCase("year")) {
+                stm.setString(1, time);
+            }
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
                 Customer c = new Customer();
@@ -263,7 +270,7 @@ public class CustomerDBContext extends DBContext {
                 stm.setInt(3, pagesize);
                 stm.setInt(4, pageindex);
                 stm.setInt(5, pagesize);
-            }else{
+            } else {
                 stm.setInt(1, pageindex);
                 stm.setInt(2, pagesize);
                 stm.setInt(3, pageindex);
@@ -310,5 +317,4 @@ public class CustomerDBContext extends DBContext {
         return -1;
     }
 
-    
 }
