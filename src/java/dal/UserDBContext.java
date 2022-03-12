@@ -21,7 +21,7 @@ import model.User;
 public class UserDBContext extends DBContext {
 
     public User getUser(String userName, String passWord) {
-        String sql = "select u.ID, u.TaiKhoan,u.MatKhau ,u.Hoten,u.RoleID ,r.Name from [User] u  "
+        String sql = "select u.ID, u.TaiKhoan,u.MatKhau ,u.Hoten,u.RoleID,u.Anh ,r.Name from [User] u  "
                 + "inner join Role r on r.ID = u.RoleID\n"
                 + "where u.TaiKhoan = ? and u.MatKhau = ?";
         try {
@@ -39,6 +39,7 @@ public class UserDBContext extends DBContext {
                 r.setrId(rs.getInt("RoleID"));
                 r.setrName(rs.getString("Name"));
                 u.setRole(r);
+                u.setuImage(rs.getString("Anh"));
                 return u;
             }
         } catch (SQLException ex) {
