@@ -22,13 +22,12 @@
               crossorigin="anonymous">
         <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-        <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        
+        
         <title>Table</title>
         <jsp:useBean id= "bill" class="dal.BillDBContext" scope="request"></jsp:useBean>
         </head>
-        <link href="./assets/css/pager.css" rel="stylesheet" type="text/css"/>
-        <script src="./assets/js/pagger.js" type="text/javascript"></script>
+        
         <body>
             <div id="main">
             <jsp:include page="../common/header.jsp"></jsp:include>
@@ -39,7 +38,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="right-header">
-                                    <h4>List of products sold</h4>
+                                    <h4>List of bills</h4>
                                     <button type="button" onclick="location.href = 'bill-add'" class="btn btn-primary btn-add">Add Bill</button>
                                 </div>
                                 <form action="bill-list" method="POST">
@@ -47,7 +46,7 @@
                                         <div class="inputSearch col-xs-3">
                                             <label for="ex1">Search:</label>
                                             <input  class="form-control" id="myInput" type="text" name="keyWord" value="${keyWord}">
-                                            <input  type="hidden" value="${kRole}" name="kRole"/>
+                                        <input  type="hidden" value="${kRole}" name="kRole"/>
                                     </div>
                                     <input style="margin-top: 1px;
                                            padding: 4px;
@@ -65,8 +64,15 @@
 
                                     <thead>
                                     <th>STT</th>
-                                    <th>Tên Khách Hàng</th>
-                                    <th>Người Lập</th>
+                                        <c:if test="${kRole == 4}">
+                                        <th>Tên Khách Hàng</th>
+                                        <th>Người Lập</th>
+                                        </c:if>
+                                        <c:if test="${kRole == 3}">
+                                        <th>Nhà Cung Cấp</th>
+                                        <th>Người Nhập</th>
+                                        </c:if>
+                                    
                                     <th>Ngày Lập</th>
                                     <th>Mã Hóa Đơn</th>
                                     <th>Edit</th>

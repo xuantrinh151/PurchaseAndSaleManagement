@@ -11,6 +11,12 @@
         </file>
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/C:/Users/xuant/OneDrive/Desktop/PurchaseAndSaleManagement/web/view/bill/billList.jsp</file>
+            <file>file:/C:/Users/xuant/OneDrive/Desktop/PurchaseAndSaleManagement/web/view/bill/billInsert.jsp</file>
+            <file>file:/C:/Users/xuant/OneDrive/Desktop/PurchaseAndSaleManagement/web/view/bill/billEdit.jsp</file>
+            <file>file:/C:/Users/xuant/OneDrive/Desktop/PurchaseAndSaleManagement/src/java/controller/HomeController.java</file>
+            <file>file:/C:/Users/xuant/OneDrive/Desktop/PurchaseAndSaleManagement/src/java/controller/authorization/BaseAuthorizationController.java</file>
+        </group>
     </open-files>
 </project-private>

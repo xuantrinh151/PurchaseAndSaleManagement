@@ -22,7 +22,7 @@
               integrity="sha256-MfvZlkHCEqatNoGiOXveE8FIwMzZg4W85qfrfIFBfYc= sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ=="
               crossorigin="anonymous">
         <title>Management</title>
-        <jsp:useBean id= "a" class="dal.ProductDBContext" scope="request"></jsp:useBean>
+        
 
         </head>
 
