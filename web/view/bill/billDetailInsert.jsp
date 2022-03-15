@@ -64,7 +64,7 @@
 
                             <!-- Text input-->
                             <div class="form-group">
-                                <label class="col-md-4 control-label" for="stock_alert">TÊN SẢN PHẨM</label>  
+                                <label class="col-md-4 control-label" for="stock_alert">PRODUCT NAME</label>  
                                 <div class="col-md-2" >
 
                                     <select  class="form-select" size="4" aria-label="size 4 select example" name="products">
@@ -85,7 +85,7 @@
                             
                             <!-- Text input-->
                             <div class="form-group">
-                                <label class="col-md-4 control-label" for="quantity">SỐ LƯỢNG</label>  
+                                <label class="col-md-4 control-label" for="quantity">QUANTITY</label>  
                                 <div class="col-md-4">
                                     <input id="quantity" name="quantity" placeholder="SỐ LƯỢNG" class="form-control input-md" required="" type="text">
 

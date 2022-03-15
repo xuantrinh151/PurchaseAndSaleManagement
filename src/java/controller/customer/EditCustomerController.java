@@ -35,12 +35,6 @@ public class EditCustomerController extends BaseAuthorizationController {
         CustomerDBContext cdbc = new CustomerDBContext();
         Customer customer = cdbc.getCustomer(cId);
         request.setAttribute("customer", customer);
-        String message = request.getParameter("message");
-        String alert = request.getParameter("alert");
-        if (message != null && alert != null) {
-            request.setAttribute("message", message);
-            request.setAttribute("alert", alert);
-        }
         request.getRequestDispatcher("/view/customer/edit.jsp").forward(request, response);
     }
 

@@ -39,12 +39,12 @@
                             <div class="col-md-12">
                                 <div class="right-header">
                                     <h4>List of bills</h4>
-                                    <button type="button" onclick="location.href = 'bill-add'" class="btn btn-primary btn-add">Add Bill</button>
+                                    <button type="button" onclick="location.href = 'bill-add?kRole=${kRole}'" class="btn btn-primary btn-add">Add Bill</button>
                                 </div>
                                 <form action="bill-list" method="POST">
                                     <div class="form-group row">
                                         <div class="inputSearch col-xs-3">
-                                            <label for="ex1">Search:</label>
+                                            
                                             <input  class="form-control" id="myInput" type="text" name="keyWord" value="${keyWord}">
                                         <input  type="hidden" value="${kRole}" name="kRole"/>
                                     </div>
@@ -92,7 +92,7 @@
                                                     <p data-placement="top" data-toggle="tooltip" title="Edit"><button
                                                             class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal"
                                                             data-target="#edit"  
-                                                            onclick="location.href = 'bill-edit?bId=${b.bId}'"
+                                                            onclick="location.href = 'bill-edit?bId=${b.bId}&kRole=${kRole}'"
                                                             ><span
                                                                 class="glyphicon glyphicon-pencil"></span></button></p>
                                                 </td>

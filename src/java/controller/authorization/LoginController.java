@@ -52,12 +52,10 @@ public class LoginController extends HttpServlet {
         if (user != null) {
              String remember = request.getParameter("remember");
             if (remember != null) {
-                
                 Cookie c_user = new Cookie("user", userName);
                 Cookie c_pass = new Cookie("pass", passWord);
-                
-                c_user.setMaxAge(60);
-                c_pass.setMaxAge(60);
+                c_user.setMaxAge(60 * 60);
+                c_pass.setMaxAge(60 * 60);
                 response.addCookie(c_user);
                 response.addCookie(c_pass);
                 

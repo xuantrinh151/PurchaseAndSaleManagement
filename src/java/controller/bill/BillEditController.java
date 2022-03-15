@@ -34,6 +34,7 @@ public class BillEditController extends BaseAuthorizationController {
     @Override
     protected void processGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String kRole = request.getParameter("kRole");
         String raw_bId = request.getParameter("bId");
         int bId = Integer.parseInt(raw_bId);
         BillDBContext bdbc = new BillDBContext();
@@ -44,6 +45,7 @@ public class BillEditController extends BaseAuthorizationController {
         request.setAttribute("customers", customers);
         UserDBContext udbc = new UserDBContext();
         ArrayList<User> users = udbc.getAllUser();
+        request.setAttribute("kRole", kRole);
         request.setAttribute("users", users);
         request.getRequestDispatcher("/view/bill/billEdit.jsp").forward(request, response);
     }

@@ -33,6 +33,8 @@ public class BillInsertController extends BaseAuthorizationController {
     protected void processGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
+        String kRole = request.getParameter("kRole");
+                
         String message = request.getParameter("message");
         String alert = request.getParameter("alert");
         if (message != null && alert != null) {
@@ -45,12 +47,14 @@ public class BillInsertController extends BaseAuthorizationController {
         UserDBContext udbc = new UserDBContext();
         ArrayList<User> users = udbc.getAllUser();
         request.setAttribute("users", users);
+        request.setAttribute("kRole", kRole);
         request.getRequestDispatcher("/view/bill/billInsert.jsp").forward(request, response);
     }
 
     @Override
     protected void processPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
         String cId = request.getParameter("customer");
         String uId = request.getParameter("user");
         String date = request.getParameter("time");
@@ -70,8 +74,6 @@ public class BillInsertController extends BaseAuthorizationController {
         
         if(test != 0){
             response.sendRedirect("bill-detail?bid=" + test);
-        }else {
-            response.getWriter().print("HUUHHU");
         }
         
         

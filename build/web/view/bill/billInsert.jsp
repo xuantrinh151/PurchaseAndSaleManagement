@@ -58,7 +58,12 @@
 
                             <!-- Text input-->
                             <div class="form-group">
-                                <label class="col-md-4 control-label" for="stock_alert">TÊN KHÁCH HÀNG</label>  
+                                <c:if test="${kRole == 4}">
+                                    <label class="col-md-4 control-label" for="stock_alert">CUSTOMER NAME</label>  
+                                </c:if>
+                                <c:if test="${kRole == 3}">
+                                    <label class="col-md-4 control-label" for="stock_alert">SUPPLIlER NAME</label>  
+                                </c:if>   
                                 <div class="col-md-2" >
 
                                     <select style="width: 174px;" class="form-select" size="4" aria-label="size 4 select example" name="customer">
@@ -77,7 +82,12 @@
 
                             <!-- Text input-->
                             <div class="form-group">
-                                <label class="col-md-4 control-label" for="stock_alert">NGƯỜI LẬP</label>  
+                                <c:if test="${kRole == 4}">
+                                    <label class="col-md-4 control-label" for="stock_alert">SELLER </label>  
+                                </c:if>  
+                                <c:if test="${kRole == 3}">
+                                    <label class="col-md-4 control-label" for="stock_alert">IMPORTER </label>  
+                                </c:if>  
                                 <div class="col-md-2" >
 
                                     <select style="width: 174px;" class="form-select" size="4" aria-label="size 4 select example" name="user">
@@ -91,7 +101,8 @@
                             </div>
                             <!-- Text input-->
                             <div class="form-group">
-                                <label class="col-md-4 control-label" for="stock_alert">NGÀY LẬP</label>  
+                                
+                                <label class="col-md-4 control-label" for="stock_alert">TIME</label>  
                                 <div class="col-md-2">
                                     <input id="stock_alert" name="time" placeholder="NGÀY LẬP" class="form-control input-md" required="" type="date">
                                 </div>

@@ -50,7 +50,7 @@
                                 <form>
                                     <div class="form-group row">
                                         <div class="inputSearch col-xs-3">
-                                            <label for="ex1">Search:</label>
+                                            
 
                                             <input  class="form-control" id="myInput" type="text" name="keyWord" value="${keyWord}">
                                         </div>

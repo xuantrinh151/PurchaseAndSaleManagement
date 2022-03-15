@@ -34,12 +34,7 @@ public class EditProductController extends BaseAuthorizationController {
         ProductDBContext pdbc = new ProductDBContext();
         Product product = pdbc.getProduct(pId);
         request.setAttribute("product", product);
-        String message = request.getParameter("message");
-        String alert = request.getParameter("alert");
-        if (message != null && alert != null) {
-            request.setAttribute("message", message);
-            request.setAttribute("alert", alert);
-        }
+        
         request.getRequestDispatcher("/view/product/edit.jsp").forward(request, response);
     }
 
